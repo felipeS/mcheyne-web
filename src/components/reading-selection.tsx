@@ -7,8 +7,8 @@ import { useTranslations } from 'next-intl'
 import { splitPassage } from '@/lib/planConstants'
 
 export function ReadingSelection() {
-  const { getSelection, hasRead, toggleRead } = usePlan()
-  const selection = getSelection()
+  const { getSelection, hasRead, toggleRead, selectedIndex } = usePlan()
+  const selection = getSelection(selectedIndex)
   const t = useTranslations('books')
 
   if (selection?.isLeap) {
@@ -24,11 +24,14 @@ export function ReadingSelection() {
     )
   }
 
+  // Use a relaxed type signature to translate dynamic book keys without `any` casts.
+  const translateDynamic = t as unknown as (key: string, values?: { defaultMessage?: string }) => string
+
   return (
     <div className="w-full max-w-md flex flex-col gap-3">
       {selection.passages.map((desc, id) => {
         const { book, chapter } = splitPassage(desc)
-        const localizedBook = t(book as any, { defaultMessage: book })
+        const localizedBook = translateDynamic(book, { defaultMessage: book })
         const label = `${localizedBook}${chapter ? ' ' + chapter : ''}`
         const read = hasRead(desc, id)
         return (

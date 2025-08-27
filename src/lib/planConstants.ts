@@ -378,7 +378,6 @@ export function isLeapYear(year: number) {
 export function buildSelectionsWithLeap(startDate: Date): Selection[] {
   const selections: Selection[] = RAW_PLAN_DATA.map(list => ({ passages: list }))
   // Insert leap day marker when Feb 29 exists between startDate and startDate+364 days
-  const cal = new Date(startDate)
   let leapIndex = 0
   let containsFeb29 = false
   for (let day = 0; day < 365; day++) {

@@ -1,7 +1,7 @@
 "use client"
 
 import {createContext, useContext, useEffect, useMemo, useState} from 'react'
-import { RAW_PLAN_DATA, buildSelectionsWithLeap, indexForDateFromStartDate, v2Key } from '@/lib/planConstants'
+import { buildSelectionsWithLeap, indexForDateFromStartDate, v2Key } from '@/lib/planConstants'
 
 export type PassageState = Record<string, boolean>
 
@@ -13,6 +13,8 @@ type PlanContextType = {
   setSelfPaced: (v: boolean) => void
   selections: { passages: string[]; isLeap?: boolean }[]
   indexForToday: number
+  selectedIndex: number
+  setSelectedIndex: (i: number) => void
   getSelection: (index?: number) => { passages: string[]; isLeap?: boolean }
   hasRead: (desc: string, id: number) => boolean
   toggleRead: (desc: string, id: number) => void
@@ -57,6 +59,7 @@ export function PlanProvider({ children }: { children: React.ReactNode }) {
   const [isSelfPaced, setSelfPacedState] = useState<boolean>(false)
   const [passages, setPassages] = useState<PassageState>({})
   const [onboarded, setOnboardedState] = useState<boolean>(false)
+  const [selectedIndex, setSelectedIndex] = useState<number>(0)
 
   // Hydrate from localStorage once on client
   useEffect(() => {
@@ -79,6 +82,11 @@ export function PlanProvider({ children }: { children: React.ReactNode }) {
       return indexForDateFromStartDate(new Date(), startDate, selections.length)
     }
   }, [hydrated, isSelfPaced, selections, passages, startDate])
+
+  // Keep selectedIndex in sync with "today" when the plan basis changes
+  useEffect(() => {
+    setSelectedIndex(indexForToday)
+  }, [indexForToday])
 
   function setStartDate(d: Date) {
     setStartDateState(d)
@@ -140,6 +148,8 @@ export function PlanProvider({ children }: { children: React.ReactNode }) {
     setSelfPaced,
     selections,
     indexForToday,
+    selectedIndex,
+    setSelectedIndex,
     getSelection,
     hasRead,
     toggleRead,
