@@ -2,6 +2,8 @@
 
 import { NextIntlClientProvider } from "next-intl";
 import { ServiceWorkerRegister } from "./service-worker-register";
+import { Analytics } from "@vercel/analytics/react";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 
 export function ClientProviders({
   children,
@@ -16,6 +18,8 @@ export function ClientProviders({
     <NextIntlClientProvider locale={locale} messages={messages} timeZone="UTC">
       <ServiceWorkerRegister />
       {children}
+      <Analytics />
+      <SpeedInsights />
     </NextIntlClientProvider>
   );
 }
