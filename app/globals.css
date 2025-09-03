@@ -5,6 +5,7 @@
 
 :root {
   /* Light theme (default) */
+  color-scheme: light dark;
   --background: 0 0% 100%;
   --foreground: 222.2 84% 4.9%;
 
@@ -141,4 +142,18 @@ body {
 body {
   background-color: hsl(var(--background));
   color: hsl(var(--foreground));
+}
+
+/* Date input dark theme support */
+input[type="date"] {
+  color-scheme: light dark;
+}
+
+/* Ensure date input respects theme colors */
+.dark input[type="date"] {
+  color-scheme: dark;
+}
+
+.light input[type="date"] {
+  color-scheme: light;
 }

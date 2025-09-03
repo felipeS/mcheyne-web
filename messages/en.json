@@ -23,6 +23,7 @@
     "close": "Close"
   },
   "onboarding": {
+    "title": "Welcome",
     "intro": "Robert Murray M'Cheyne's daily Bible reading plan guides readers through the Old Testament once and the New Testament and Psalms twice per year.",
     "selfPaced": "Self-Paced Mode",
     "importProgress": "Import Progress (pick a start date in the last year)",

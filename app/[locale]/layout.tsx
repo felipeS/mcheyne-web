@@ -51,7 +51,7 @@ export default async function LocaleLayout({
         <link rel="shortcut icon" href="/favicon.ico" />
 
         <meta name="twitter:card" content="summary" />
-        <meta name="twitter:url" content="https://your-domain.com" />
+        <meta name="twitter:url" content="https://www.mcheyne.app" />
         <meta name="twitter:title" content="M'Cheyne Reading Plan" />
         <meta
           name="twitter:description"
@@ -59,7 +59,7 @@ export default async function LocaleLayout({
         />
         <meta
           name="twitter:image"
-          content="https://your-domain.com/icons/icon-192x192.png"
+          content="https://www.mcheyne.app/icons/icon-192x192.png"
         />
         <meta name="twitter:creator" content="@yourusername" />
         <meta property="og:type" content="website" />
@@ -69,10 +69,10 @@ export default async function LocaleLayout({
           content="Daily Bible reading plan following Robert Murray M'Cheyne's schedule"
         />
         <meta property="og:site_name" content="M'Cheyne Reading Plan" />
-        <meta property="og:url" content="https://your-domain.com" />
+        <meta property="og:url" content="https://www.mcheyne.app" />
         <meta
           property="og:image"
-          content="https://your-domain.com/icons/icon-192x192.png"
+          content="https://www.mcheyne.app/icons/icon-192x192.png"
         />
       </head>
       <body>

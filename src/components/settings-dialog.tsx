@@ -16,6 +16,7 @@ import { useTranslations } from "next-intl";
 import { useState } from "react";
 import { ThemeToggle } from "./theme-toggle";
 import { useSettings } from "@/context/SettingsContext";
+import { formatDateInput } from "@/lib/dateUtils";
 
 export function SettingsDialog() {
   const t = useTranslations("settings");
@@ -94,11 +95,4 @@ export function SettingsDialog() {
       </Dialog>
     </div>
   );
-}
-
-function formatDateInput(d: Date) {
-  const y = d.getFullYear();
-  const m = String(d.getMonth() + 1).padStart(2, "0");
-  const day = String(d.getDate()).padStart(2, "0");
-  return `${y}-${m}-${day}`;
 }

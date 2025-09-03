@@ -23,6 +23,7 @@
     "close": "Cerrar"
   },
   "onboarding": {
+    "title": "Bienvenido",
     "intro": "El plan de lectura bíblica diaria de Robert Murray M'Cheyne guía a los lectores a través del Antiguo Testamento una vez y del Nuevo Testamento y los Salmos dos veces al año.",
     "selfPaced": "Modo autodidacta",
     "importProgress": "Importar progreso (elige una fecha de inicio del último año)",
