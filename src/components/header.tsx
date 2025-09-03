@@ -1,10 +1,10 @@
 "use client";
 
-import { BookOpen } from "lucide-react";
+import { BookOpen, Settings } from "lucide-react";
 import { useTranslations } from "next-intl";
-import { ThemeToggle } from "./theme-toggle";
+import { Button } from "@/components/ui/button";
 
-export function Header() {
+export function Header({ onSettingsClick }: { onSettingsClick: () => void }) {
   const t = useTranslations("app");
 
   return (
@@ -18,7 +18,9 @@ export function Header() {
           </div>
         </div>
       </div>
-      <ThemeToggle />
+      <Button variant="outline" size="icon" onClick={onSettingsClick}>
+        <Settings className="h-4 w-4" />
+      </Button>
     </div>
   );
 }

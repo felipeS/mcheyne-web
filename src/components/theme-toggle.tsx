@@ -62,7 +62,7 @@ export function ThemeToggle() {
     );
   };
 
-  const getTooltip = () => {
+  const getLabel = () => {
     if (theme === "system") {
       return t("system");
     }
@@ -80,11 +80,11 @@ export function ThemeToggle() {
   return (
     <Button
       variant="outline"
-      size="icon"
       onClick={cycleTheme}
-      title={getTooltip()}
+      title={getLabel()}
       aria-label={t("toggleTheme")}
     >
+      <div className="text-md font-normal mr-2">{getLabel()}</div>
       {getIcon()}
     </Button>
   );
