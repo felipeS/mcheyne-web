@@ -5,6 +5,12 @@
     "today": "Hoy",
     "dateLabel": "{daysFromToday, plural, =0 {Hoy} other {{daysFromToday, number} días desde hoy}}"
   },
+  "theme": {
+    "toggleTheme": "Cambiar tema",
+    "light": "Claro",
+    "dark": "Oscuro",
+    "system": "Sistema"
+  },
   "settings": {
     "open": "Ajustes",
     "title": "Ajustes",
@@ -91,4 +97,3 @@
     "Revelation": "Apocalipsis"
   }
 }
-

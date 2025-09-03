@@ -5,6 +5,12 @@
     "today": "Today",
     "dateLabel": "{daysFromToday, plural, =0 {Today} other {{daysFromToday, number} days from today}}"
   },
+  "theme": {
+    "toggleTheme": "Toggle theme",
+    "light": "Light",
+    "dark": "Dark",
+    "system": "System"
+  },
   "settings": {
     "open": "Settings",
     "title": "Settings",
@@ -91,4 +97,3 @@
     "Revelation": "Revelation"
   }
 }
-
