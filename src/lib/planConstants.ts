@@ -363,50 +363,59 @@ export const RAW_PLAN_DATA: string[][] = [
   ["2 Chronicles 33", "Revelation 19", "Malachi 1", "John 18"],
   ["2 Chronicles 34", "Revelation 20", "Malachi 2", "John 19"],
   ["2 Chronicles 35", "Revelation 21", "Malachi 3", "John 20"],
-  ["2 Chronicles 36", "Revelation 22", "Malachi 4", "John 21"]
-]
-export type Passage = string
-export type Selection = { passages: Passage[]; isLeap?: boolean }
-export const MIGRATION_NOTE = 'No v1/v2 migration in web; keys are v2-like using "desc+index".'
+  ["2 Chronicles 36", "Revelation 22", "Malachi 4", "John 21"],
+];
+export type Passage = string;
+export type Selection = { passages: Passage[]; isLeap?: boolean };
+export const MIGRATION_NOTE =
+  'No v1/v2 migration in web; keys are v2-like using "desc+index".';
 
-export const DAY_IN_SECONDS = 86400
+export const DAY_IN_SECONDS = 86400;
 
 export function isLeapYear(year: number) {
-  return (year % 4 === 0) && (year % 100 !== 0 || year % 400 === 0)
+  return year % 4 === 0 && (year % 100 !== 0 || year % 400 === 0);
 }
 
 export function buildSelectionsWithLeap(startDate: Date): Selection[] {
-  const selections: Selection[] = RAW_PLAN_DATA.map(list => ({ passages: list }))
+  const selections: Selection[] = RAW_PLAN_DATA.map((list) => ({
+    passages: list,
+  }));
   // Insert leap day marker when Feb 29 exists between startDate and startDate+364 days
-  let leapIndex = 0
-  let containsFeb29 = false
+  let leapIndex = 0;
+  let containsFeb29 = false;
   for (let day = 0; day < 365; day++) {
-    const d = new Date(startDate.getTime() + day * DAY_IN_SECONDS * 1000)
-    if (d.getMonth() === 1 && d.getDate() === 29) { // Feb = 1
-      containsFeb29 = true
-      break
+    const d = new Date(startDate.getTime() + day * DAY_IN_SECONDS * 1000);
+    if (d.getMonth() === 1 && d.getDate() === 29) {
+      // Feb = 1
+      containsFeb29 = true;
+      break;
     }
-    leapIndex++
+    leapIndex++;
   }
   if (containsFeb29) {
-    selections.splice(leapIndex, 0, { passages: [], isLeap: true })
+    selections.splice(leapIndex, 0, { passages: [], isLeap: true });
   }
-  return selections
+  return selections;
 }
 
-export function indexForDateFromStartDate(date: Date, startDate: Date, total: number) {
-  const diff = Math.floor((date.getTime() - startDate.getTime()) / (DAY_IN_SECONDS * 1000))
-  if (diff < 0) return 0
-  return diff % total
+export function indexForDateFromStartDate(
+  date: Date,
+  startDate: Date,
+  total: number
+) {
+  const diff = Math.floor(
+    (date.getTime() - startDate.getTime()) / (DAY_IN_SECONDS * 1000)
+  );
+  if (diff < 0) return 0;
+  return diff % total;
 }
 
 export function splitPassage(desc: string): { book: string; chapter: string } {
-  const idx = desc.lastIndexOf(' ')
-  if (idx === -1) return { book: desc, chapter: '' }
-  return { book: desc.slice(0, idx), chapter: desc.slice(idx + 1) }
+  const idx = desc.lastIndexOf(" ");
+  if (idx === -1) return { book: desc, chapter: "" };
+  return { book: desc.slice(0, idx), chapter: desc.slice(idx + 1) };
 }
 
 export function v2Key(desc: string, id: number) {
-  return `${desc}+${id}`
+  return `${desc}+${id}`;
 }
-

@@ -5,3 +5,4 @@ node_modules
 .DS_Store
 diary/*
 tsconfig.tsbuildinfo
+coverage/*
