@@ -5,6 +5,7 @@ import { ServiceWorkerRegister } from "./service-worker-register";
 import { Analytics } from "@vercel/analytics/react";
 import { Header } from "./header";
 import { SettingsProvider, useSettings } from "@/context/SettingsContext";
+import { PostHogProvider } from "./PostHogProvider";
 
 function HeaderWithSettings() {
   const { openSettings } = useSettings();
@@ -22,14 +23,16 @@ export function ClientProviders({
 }) {
   return (
     <NextIntlClientProvider locale={locale} messages={messages} timeZone="UTC">
-      <SettingsProvider>
-        <ServiceWorkerRegister />
-        <div className="mx-auto max-w-screen-sm p-4 flex flex-col items-center gap-8">
-          <HeaderWithSettings />
-          {children}
-        </div>
-        <Analytics />
-      </SettingsProvider>
+      <PostHogProvider>
+        <SettingsProvider>
+          <ServiceWorkerRegister />
+          <div className="mx-auto max-w-screen-sm p-4 flex flex-col items-center gap-8">
+            <HeaderWithSettings />
+            {children}
+          </div>
+          <Analytics />
+        </SettingsProvider>
+      </PostHogProvider>
     </NextIntlClientProvider>
   );
 }
