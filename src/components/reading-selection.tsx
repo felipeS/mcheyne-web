@@ -44,7 +44,7 @@ export function ReadingSelection() {
             key={id}
             onClick={() => toggleRead(desc, id)}
             variant={read ? "secondary" : "default"}
-            className="justify-start h-16 rounded-full bg-accent text-accent-foreground hover:bg-accent/80"
+            className="justify-start h-16 rounded-full"
           >
             <div className="flex items-center gap-3">
               <div className="text-xl">{read ? "◉" : "○"}</div>
