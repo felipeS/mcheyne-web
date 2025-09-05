@@ -1,8 +1,8 @@
 import React from "react";
-import { render, screen, act } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { PlanProvider, usePlan } from "./PlanProvider";
-import { buildSelectionsWithLeap, RAW_PLAN_DATA } from "@/lib/planConstants";
+import { RAW_PLAN_DATA } from "@/lib/planConstants";
 
 // Mock localStorage
 const localStorageMock = (() => {
@@ -17,6 +17,13 @@ const localStorageMock = (() => {
     }),
     clear: jest.fn(() => {
       store = {};
+    }),
+    get length(): number {
+      return Object.keys(store).length;
+    },
+    key: jest.fn((index: number): string | null => {
+      const keys = Object.keys(store);
+      return keys[index] || null;
     }),
   };
 })();
