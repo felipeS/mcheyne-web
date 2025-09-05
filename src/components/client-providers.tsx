@@ -26,7 +26,7 @@ export function ClientProviders({
     <NextIntlClientProvider locale={locale} messages={messages} timeZone="UTC">
       <PostHogProvider>
         <SettingsProvider>
-          <Theme>
+          <Theme accentColor="gray">
             <ServiceWorkerRegister />
             <div className="mx-auto max-w-screen-sm p-4 flex flex-col items-center gap-8">
               <HeaderWithSettings />
