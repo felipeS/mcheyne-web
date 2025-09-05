@@ -2,7 +2,7 @@
 
 import { BookOpen, Settings } from "lucide-react";
 import { useTranslations } from "next-intl";
-import { Button } from "@/components/ui/button";
+import { IconButton } from "@radix-ui/themes";
 
 export function Header({ onSettingsClick }: { onSettingsClick: () => void }) {
   const t = useTranslations("app");
@@ -18,9 +18,9 @@ export function Header({ onSettingsClick }: { onSettingsClick: () => void }) {
           </div>
         </div>
       </div>
-      <Button variant="outline" size="icon" onClick={onSettingsClick}>
+      <IconButton variant="outline" onClick={onSettingsClick}>
         <Settings className="h-4 w-4" />
-      </Button>
+      </IconButton>
     </div>
   );
 }
