@@ -12,17 +12,35 @@ import { Button } from "@/components/ui/button";
 import { Switch } from "@/components/ui/switch";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
-import { useTranslations } from "next-intl";
+import { useTranslations, useLocale } from "next-intl";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import { ThemeToggle } from "./theme-toggle";
 import { useSettings } from "@/context/SettingsContext";
 import { formatDateInput } from "@/lib/dateUtils";
+import { locales } from "@/lib/i18n";
+import {
+  Dropdown,
+  DropdownTrigger,
+  DropdownMenu,
+  DropdownMenuItem,
+} from "./ui/dropdown";
 
 export function SettingsDialog() {
   const t = useTranslations("settings");
   const { isSelfPaced, setSelfPaced, startDate, changeStartDate } = usePlan();
   const { isOpen, closeSettings } = useSettings();
   const [confirmReset, setConfirmReset] = useState(false);
+  const router = useRouter();
+  const currentLocale = useLocale();
+
+  const handleLanguageChange = (newLocale: string) => {
+    if (newLocale !== currentLocale) {
+      // Set the locale cookie and redirect
+      document.cookie = `NEXT_LOCALE=${newLocale}; path=/; max-age=31536000`;
+      router.push(`/${newLocale}`);
+    }
+  };
 
   return (
     <div className="w-full max-w-md flex justify-end">
@@ -35,6 +53,28 @@ export function SettingsDialog() {
             <div className="flex items-center justify-between">
               <div className="text-md font-normal">{t("theme")}</div>
               <ThemeToggle />
+            </div>
+            <div className="flex items-center justify-between">
+              <div className="text-md font-normal">{t("language")}</div>
+              <Dropdown minWidth={100}>
+                <DropdownTrigger className="min-w-[100px]">
+                  {currentLocale === "en" ? t("english") : t("spanish")}
+                </DropdownTrigger>
+                <DropdownMenu>
+                  <DropdownMenuItem
+                    onClick={() => handleLanguageChange("en")}
+                    className="first:rounded-t-md"
+                  >
+                    {t("english")}
+                  </DropdownMenuItem>
+                  <DropdownMenuItem
+                    onClick={() => handleLanguageChange("es")}
+                    className="last:rounded-b-md"
+                  >
+                    {t("spanish")}
+                  </DropdownMenuItem>
+                </DropdownMenu>
+              </Dropdown>
             </div>
             <div className="flex items-center justify-between">
               <div className="text-md font-normal">{t("selfPaced")}</div>
