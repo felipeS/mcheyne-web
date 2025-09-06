@@ -33,19 +33,27 @@ self.addEventListener("activate", (event) => {
 self.addEventListener("fetch", (event) => {
   event.respondWith(
     caches.match(event.request).then((cachedResponse) => {
-      const fetchPromise = fetch(event.request).then((networkResponse) => {
-        // Check if we received a valid response
-        if (
-          networkResponse &&
-          networkResponse.status === 200
-        ) {
-          const responseToCache = networkResponse.clone();
-          caches.open(CACHE_NAME).then((cache) => {
-            cache.put(event.request, responseToCache);
-          });
-        }
-        return networkResponse;
-      });
+      const fetchPromise = fetch(event.request)
+        .then((networkResponse) => {
+          // Check if we received a valid response
+          if (
+            networkResponse &&
+            networkResponse.status === 200
+          ) {
+            const responseToCache = networkResponse.clone();
+            caches.open(CACHE_NAME).then((cache) => {
+              cache.put(event.request, responseToCache);
+            });
+          }
+          return networkResponse;
+        })
+        .catch(error => {
+            // A network error happened.
+            // We'll just swallow the error and let the browser
+            // handle it as it would if there were no service worker.
+            console.error("Fetch failed:", error);
+            throw error;
+        });
 
       // Return cached response immediately, then update cache in background
       return cachedResponse || fetchPromise;

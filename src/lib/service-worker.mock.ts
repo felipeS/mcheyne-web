@@ -27,13 +27,24 @@ export const mockClients = {
   claim: jest.fn(),
 };
 
+interface MockServiceWorkerGlobalScope {
+    addEventListener: jest.Mock;
+    skipWaiting: jest.Mock;
+    clients: {
+        claim: jest.Mock;
+    };
+}
+
+type EventListener = (event: Event) => void;
+
 export function setupMocks() {
-  global.caches = mockCaches as any;
-  global.self = {
+  // @ts-expect-error: mocking browser environment
+  global.caches = mockCaches;
+  (global.self as unknown as MockServiceWorkerGlobalScope) = {
     addEventListener: jest.fn(),
     skipWaiting: jest.fn(),
     clients: mockClients,
-  } as any;
+  };
   global.fetch = jest.fn();
 
   cachePutPromise = new Promise(resolve => {
@@ -41,32 +52,35 @@ export function setupMocks() {
   });
 }
 
-export function triggerInstall(sw: any) {
-  const installCallback = global.self.addEventListener.mock.calls.find(
-    (call) => call[0] === "install"
+export function triggerInstall() {
+  const selfMock = global.self as unknown as MockServiceWorkerGlobalScope;
+  const installCallback = selfMock.addEventListener.mock.calls.find(
+    (call: [string, EventListener]) => call[0] === "install"
   )[1];
   const event = { waitUntil: jest.fn() };
-  installCallback(event);
+  installCallback(event as unknown as ExtendableEvent);
   return event;
 }
 
-export function triggerActivate(sw: any) {
-  const activateCallback = global.self.addEventListener.mock.calls.find(
-    (call) => call[0] === "activate"
+export function triggerActivate() {
+  const selfMock = global.self as unknown as MockServiceWorkerGlobalScope;
+  const activateCallback = selfMock.addEventListener.mock.calls.find(
+    (call: [string, EventListener]) => call[0] === "activate"
   )[1];
   const event = { waitUntil: jest.fn() };
-  activateCallback(event);
+  activateCallback(event as unknown as ExtendableEvent);
   return event;
 }
 
-export function triggerFetch(sw: any, request: Request) {
-    const fetchCallback = global.self.addEventListener.mock.calls.find(
-        (call) => call[0] === "fetch"
+export function triggerFetch(request: Request) {
+    const selfMock = global.self as unknown as MockServiceWorkerGlobalScope;
+    const fetchCallback = selfMock.addEventListener.mock.calls.find(
+        (call: [string, EventListener]) => call[0] === "fetch"
     )[1];
     const event = {
         request,
         respondWith: jest.fn(),
     };
-    fetchCallback(event);
+    fetchCallback(event as unknown as FetchEvent);
     return event;
 }

@@ -18,7 +18,6 @@ import { useRouter } from "next/navigation";
 import { ThemeToggle } from "./theme-toggle";
 import { useSettings } from "@/context/SettingsContext";
 import { formatDateInput } from "@/lib/dateUtils";
-import { locales } from "@/lib/i18n";
 import {
   Dropdown,
   DropdownTrigger,

@@ -30,7 +30,7 @@ describe("Service Worker", () => {
     mockCaches.match.mockResolvedValue(cachedResponse);
     (global.fetch as jest.Mock).mockResolvedValue(networkResponse);
 
-    const fetchEvent = triggerFetch(self, request);
+    const fetchEvent = triggerFetch(request);
 
     // Wait for the fetch event handler to respond
     await new Promise(process.nextTick);
