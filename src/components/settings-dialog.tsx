@@ -13,7 +13,7 @@ import { useRouter } from "next/navigation";
 import { ThemeToggle } from "./theme-toggle";
 import { useSettings } from "@/context/SettingsContext";
 import { formatDateInput } from "@/lib/dateUtils";
-import { DropdownMenu } from "@/components/ui/dropdown";
+import { Select } from "@radix-ui/themes";
 
 export function SettingsDialog() {
   const t = useTranslations("settings");
@@ -43,21 +43,16 @@ export function SettingsDialog() {
             </div>
             <div className="flex items-center justify-between">
               <div className="text-md font-normal">{t("language")}</div>
-              <DropdownMenu.Root>
-                <DropdownMenu.Trigger>
-                  <Button variant="soft">
-                    {currentLocale === "en" ? t("english") : t("spanish")}
-                  </Button>
-                </DropdownMenu.Trigger>
-                <DropdownMenu.Content>
-                  <DropdownMenu.Item onClick={() => handleLanguageChange("en")}>
-                    {t("english")}
-                  </DropdownMenu.Item>
-                  <DropdownMenu.Item onClick={() => handleLanguageChange("es")}>
-                    {t("spanish")}
-                  </DropdownMenu.Item>
-                </DropdownMenu.Content>
-              </DropdownMenu.Root>
+              <Select.Root
+                value={currentLocale}
+                onValueChange={handleLanguageChange}
+              >
+                <Select.Trigger />
+                <Select.Content>
+                  <Select.Item value="en">{t("english")}</Select.Item>
+                  <Select.Item value="es">{t("spanish")}</Select.Item>
+                </Select.Content>
+              </Select.Root>
             </div>
             <Text as="label" size="2">
               <div className="flex items-center justify-between">
