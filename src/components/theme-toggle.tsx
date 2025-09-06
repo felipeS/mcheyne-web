@@ -40,8 +40,14 @@ export function ThemeToggle() {
   const cycleTheme = () => {
     if (!mounted) return;
 
-    const newTheme =
-      theme === "light" ? "dark" : theme === "dark" ? "system" : "light";
+    let newTheme: "light" | "dark" | "system";
+    if (theme === "light") {
+      newTheme = "dark";
+    } else if (theme === "dark") {
+      newTheme = "system";
+    } else {
+      newTheme = "light";
+    }
     setTheme(newTheme);
 
     if (typeof window !== "undefined") {
