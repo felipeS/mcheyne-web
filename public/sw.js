@@ -37,8 +37,7 @@ self.addEventListener("fetch", (event) => {
         // Check if we received a valid response
         if (
           networkResponse &&
-          networkResponse.status === 200 &&
-          networkResponse.type === "basic"
+          networkResponse.status === 200
         ) {
           const responseToCache = networkResponse.clone();
           caches.open(CACHE_NAME).then((cache) => {
