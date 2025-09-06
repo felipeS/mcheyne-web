@@ -29,17 +29,19 @@ export function Onboarding() {
           <div className="text-sm font-normal">{t("selfPaced")}</div>
           <Switch checked={isSelfPaced} onCheckedChange={setSelfPaced} />
         </div>
-        <div className="flex items-center justify-between gap-4">
-          <Label className="text-sm font-normal" htmlFor="startDate">
-            {t("importProgress")}
-          </Label>
-          <Input
-            id="startDate"
-            type="date"
-            className="w-auto"
-            onChange={(e) => changeStartDate(new Date(e.target.value))}
-          />
-        </div>
+        {!isSelfPaced && (
+          <div className="flex items-center justify-between gap-4">
+            <Label className="text-sm font-normal" htmlFor="startDate">
+              {t("importProgress")}
+            </Label>
+            <Input
+              id="startDate"
+              type="date"
+              className="w-auto"
+              onChange={(e) => changeStartDate(new Date(e.target.value))}
+            />
+          </div>
+        )}
         <div className="flex justify-end">
           <Button onClick={() => setOnboarded(true)}>{t("next")}</Button>
         </div>
