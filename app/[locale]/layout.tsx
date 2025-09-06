@@ -1,4 +1,5 @@
 import { ReactNode } from "react";
+import "@radix-ui/themes/styles.css";
 import "../globals.css";
 import { ClientProviders } from "@/components/client-providers";
 

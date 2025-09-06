@@ -6,6 +6,7 @@ import { Analytics } from "@vercel/analytics/react";
 import { Header } from "./header";
 import { SettingsProvider, useSettings } from "@/context/SettingsContext";
 import { PostHogProvider } from "./PostHogProvider";
+import { Theme } from "@radix-ui/themes";
 
 function HeaderWithSettings() {
   const { openSettings } = useSettings();
@@ -25,12 +26,14 @@ export function ClientProviders({
     <NextIntlClientProvider locale={locale} messages={messages} timeZone="UTC">
       <PostHogProvider>
         <SettingsProvider>
-          <ServiceWorkerRegister />
-          <div className="mx-auto max-w-screen-sm p-4 flex flex-col items-center gap-8">
-            <HeaderWithSettings />
-            {children}
-          </div>
-          <Analytics />
+          <Theme accentColor="gold">
+            <ServiceWorkerRegister />
+            <div className="mx-auto max-w-screen-sm p-4 flex flex-col items-center gap-8">
+              <HeaderWithSettings />
+              {children}
+            </div>
+            <Analytics />
+          </Theme>
         </SettingsProvider>
       </PostHogProvider>
     </NextIntlClientProvider>

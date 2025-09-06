@@ -1,13 +1,8 @@
 "use client";
 
 import { usePlan } from "@/context/PlanProvider";
-import {
-  Dialog,
-  DialogContent,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog";
+import { Dialog } from "@/components/ui/dialog";
+import { Flex, Text } from "@radix-ui/themes";
 import { Button } from "@/components/ui/button";
 import { Switch } from "@/components/ui/switch";
 import { Label } from "@/components/ui/label";
@@ -18,13 +13,7 @@ import { useRouter } from "next/navigation";
 import { ThemeToggle } from "./theme-toggle";
 import { useSettings } from "@/context/SettingsContext";
 import { formatDateInput } from "@/lib/dateUtils";
-import { locales } from "@/lib/i18n";
-import {
-  Dropdown,
-  DropdownTrigger,
-  DropdownMenu,
-  DropdownMenuItem,
-} from "./ui/dropdown";
+import { Select } from "@radix-ui/themes";
 
 export function SettingsDialog() {
   const t = useTranslations("settings");
@@ -44,11 +33,9 @@ export function SettingsDialog() {
 
   return (
     <div className="w-full max-w-md flex justify-end">
-      <Dialog open={isOpen} onOpenChange={closeSettings}>
-        <DialogContent>
-          <DialogHeader>
-            <DialogTitle>{t("title")}</DialogTitle>
-          </DialogHeader>
+      <Dialog.Root open={isOpen} onOpenChange={closeSettings}>
+        <Dialog.Content>
+          <Dialog.Title>{t("title")}</Dialog.Title>
           <div className="space-y-4">
             <div className="flex items-center justify-between">
               <div className="text-md font-normal">{t("theme")}</div>
@@ -56,30 +43,23 @@ export function SettingsDialog() {
             </div>
             <div className="flex items-center justify-between">
               <div className="text-md font-normal">{t("language")}</div>
-              <Dropdown minWidth={100}>
-                <DropdownTrigger className="min-w-[100px]">
-                  {currentLocale === "en" ? t("english") : t("spanish")}
-                </DropdownTrigger>
-                <DropdownMenu>
-                  <DropdownMenuItem
-                    onClick={() => handleLanguageChange("en")}
-                    className="first:rounded-t-md"
-                  >
-                    {t("english")}
-                  </DropdownMenuItem>
-                  <DropdownMenuItem
-                    onClick={() => handleLanguageChange("es")}
-                    className="last:rounded-b-md"
-                  >
-                    {t("spanish")}
-                  </DropdownMenuItem>
-                </DropdownMenu>
-              </Dropdown>
+              <Select.Root
+                value={currentLocale}
+                onValueChange={handleLanguageChange}
+              >
+                <Select.Trigger />
+                <Select.Content>
+                  <Select.Item value="en">{t("english")}</Select.Item>
+                  <Select.Item value="es">{t("spanish")}</Select.Item>
+                </Select.Content>
+              </Select.Root>
             </div>
-            <div className="flex items-center justify-between">
-              <div className="text-md font-normal">{t("selfPaced")}</div>
-              <Switch checked={isSelfPaced} onCheckedChange={setSelfPaced} />
-            </div>
+            <Text as="label" size="2">
+              <div className="flex items-center justify-between">
+                <div className="text-md font-normal">{t("selfPaced")}</div>
+                <Switch checked={isSelfPaced} onCheckedChange={setSelfPaced} />
+              </div>
+            </Text>
             {!isSelfPaced && (
               <div className="flex items-center justify-between gap-4">
                 <Label className="text-md font-normal" htmlFor="startDate">
@@ -97,7 +77,8 @@ export function SettingsDialog() {
             <div className=" pt-2">
               {!confirmReset ? (
                 <Button
-                  variant="destructive"
+                  color="red"
+                  variant="solid"
                   onClick={() => setConfirmReset(true)}
                 >
                   {t("reset")}
@@ -115,7 +96,8 @@ export function SettingsDialog() {
                       {t("cancel")}
                     </Button>
                     <Button
-                      variant="destructive"
+                      color="red"
+                      variant="solid"
                       onClick={() => {
                         changeStartDate(new Date());
                         setConfirmReset(false);
@@ -128,11 +110,15 @@ export function SettingsDialog() {
               )}
             </div>
           </div>
-          <DialogFooter>
-            <Button onClick={closeSettings}>{t("close")}</Button>
-          </DialogFooter>
-        </DialogContent>
-      </Dialog>
+          <Flex gap="3" mt="4" justify="end">
+            <Dialog.Close>
+              <Button variant="soft" color="gray">
+                {t("close")}
+              </Button>
+            </Dialog.Close>
+          </Flex>
+        </Dialog.Content>
+      </Dialog.Root>
     </div>
   );
 }

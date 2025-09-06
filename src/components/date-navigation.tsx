@@ -22,7 +22,7 @@ export function DateNavigation() {
         <Button disabled={isLast} onClick={() => setSelectedIndex(Math.min(selections.length - 1, selectedIndex + 1))} variant="outline">→</Button>
       </div>
       {selectedIndex !== indexForToday ? (
-        <Button onClick={() => setSelectedIndex(indexForToday)} variant="secondary">{t('today')}</Button>
+        <Button onClick={() => setSelectedIndex(indexForToday)} variant="soft">{t('today')}</Button>
       ) : (
         <div className="h-9" />
       )}
