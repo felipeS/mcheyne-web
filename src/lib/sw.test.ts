@@ -5,6 +5,7 @@ import {
   mockCaches,
   cachePutPromise,
 } from "./service-worker.mock";
+import vm from "vm";
 import fs from "fs";
 import path from "path";
 
@@ -14,8 +15,9 @@ describe("Service Worker", () => {
     // Dynamically import the service worker script to be tested
     const swPath = path.resolve(__dirname, "../../public/sw.js");
     const swCode = fs.readFileSync(swPath, "utf-8");
-    // eslint-disable-next-line no-eval
-    eval(swCode);
+    const script = new vm.Script(swCode);
+    const context = vm.createContext(global);
+    script.runInContext(context);
   });
 
   afterEach(() => {
