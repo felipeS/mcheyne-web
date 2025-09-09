@@ -48,9 +48,12 @@ self.addEventListener("fetch", (event) => {
         })
         .catch(error => {
             // A network error happened.
-            // We'll just swallow the error and let the browser
-            // handle it as it would if there were no service worker.
+            // If there's a cached response, swallow the error.
+            // Only throw if there's no cached response to fall back to.
             console.error("Fetch failed:", error);
+            if (cachedResponse) {
+                return cachedResponse;
+            }
             throw error;
         });
 
