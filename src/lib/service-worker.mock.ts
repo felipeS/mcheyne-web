@@ -74,9 +74,13 @@ export function triggerActivate() {
 
 export function triggerFetch(request: Request) {
     const selfMock = global.self as unknown as MockServiceWorkerGlobalScope;
-    const fetchCallback = selfMock.addEventListener.mock.calls.find(
+    const fetchCall = selfMock.addEventListener.mock.calls.find(
         (call: [string, EventListener]) => call[0] === "fetch"
-    )[1];
+    );
+    if (!fetchCall) {
+        throw new Error("No 'fetch' event listener found");
+    }
+    const fetchCallback = fetchCall[1];
     const event = {
         request,
         respondWith: jest.fn(),
