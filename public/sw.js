@@ -1,4 +1,4 @@
-const CACHE_NAME = "mcheyne-web-v1";
+const CACHE_NAME = "mcheyne-web-v2"; // Incremented version
 const urlsToCache = ["/", "/en", "/es", "/manifest.json", "/offline.html"];
 
 // Install event - cache resources
@@ -9,46 +9,7 @@ self.addEventListener("install", (event) => {
       return cache.addAll(urlsToCache);
     })
   );
-});
-
-// Fetch event - serve from cache when offline
-self.addEventListener("fetch", (event) => {
-  event.respondWith(
-    caches
-      .match(event.request)
-      .then((response) => {
-        // Return cached version or fetch from network
-        if (response) {
-          return response;
-        }
-
-        return fetch(event.request).then((response) => {
-          // Check if we received a valid response
-          if (
-            !response ||
-            response.status !== 200 ||
-            response.type !== "basic"
-          ) {
-            return response;
-          }
-
-          // Clone the response
-          const responseToCache = response.clone();
-
-          caches.open(CACHE_NAME).then((cache) => {
-            cache.put(event.request, responseToCache);
-          });
-
-          return response;
-        });
-      })
-      .catch(() => {
-        // Return offline page for navigation requests
-        if (event.request.mode === "navigate") {
-          return caches.match("/offline.html");
-        }
-      })
-  );
+  self.skipWaiting();
 });
 
 // Activate event - clean up old caches
@@ -63,6 +24,45 @@ self.addEventListener("activate", (event) => {
           }
         })
       );
+    }).then(() => self.clients.claim())
+  );
+});
+
+// Fetch event - Stale-While-Revalidate
+self.addEventListener("fetch", (event) => {
+  event.respondWith(
+    caches.match(event.request).then((cachedResponse) => {
+      const fetchPromise = fetch(event.request)
+        .then(async (networkResponse) => {
+          // Check if we received a valid response
+          if (
+            networkResponse &&
+            networkResponse.status === 200
+          ) {
+            const responseToCache = networkResponse.clone();
+            const cache = await caches.open(CACHE_NAME);
+            await cache.put(event.request, responseToCache);
+          }
+          return networkResponse;
+        })
+        .catch(error => {
+            // A network error happened.
+            // If there's a cached response, swallow the error.
+            // Only throw if there's no cached response to fall back to.
+            console.error("Fetch failed:", error);
+            if (cachedResponse) {
+                return cachedResponse;
+            }
+            throw error;
+        });
+
+      // Return cached response immediately, then update cache in background
+      return cachedResponse || fetchPromise;
+    }).catch(() => {
+        // If both cache and network fail, show offline page for navigation
+        if (event.request.mode === "navigate") {
+            return caches.match("/offline.html");
+        }
     })
   );
 });
