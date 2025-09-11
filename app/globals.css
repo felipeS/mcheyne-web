@@ -40,65 +40,49 @@
 /* Dark theme - automatically applied when system prefers dark */
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: 0 0% 0%;
-    --foreground: 0 0% 100%;
-
-    --card: 0 0% 0%;
-    --card-foreground: 0 0% 100%;
-
-    --popover: 0 0% 0%;
-    --popover-foreground: 0 0% 100%;
-
-    --primary: 0 0% 100%;
-    --primary-foreground: 0 0% 0%;
-
-    --secondary: 0 0% 10%;
-    --secondary-foreground: 0 0% 100%;
-
-    --muted: 0 0% 10%;
-    --muted-foreground: 0 0% 70%;
-
-    --accent: 0 0% 10%;
-    --accent-foreground: 0 0% 100%;
-
+    --background: 240 10% 3.9%;
+    --foreground: 0 0% 92%;
+    --card: 240 10% 3.9%;
+    --card-foreground: 0 0% 92%;
+    --popover: 240 10% 3.9%;
+    --popover-foreground: 0 0% 92%;
+    --primary: 0 0% 92%;
+    --primary-foreground: 240 5.9% 10%;
+    --secondary: 240 3.7% 25%;
+    --secondary-foreground: 0 0% 92%;
+    --muted: 240 3.7% 15.9%;
+    --muted-foreground: 240 5% 64.9%;
+    --accent: 240 3.7% 15.9%;
+    --accent-foreground: 0 0% 92%;
     --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 0 0% 100%;
-
-    --border: 0 0% 10%;
-    --input: 0 0% 10%;
-    --ring: 0 0% 100%;
+    --destructive-foreground: 0 0% 92%;
+    --border: 240 3.7% 10%;
+    --input: 240 3.7% 15.9%;
+    --ring: 240 4.9% 60%;
   }
 }
 
 /* Manual dark theme override (for user preference) */
 .dark {
-  --background: 0 0% 0%;
-  --foreground: 0 0% 100%;
-
-  --card: 0 0% 0%;
-  --card-foreground: 0 0% 100%;
-
-  --popover: 0 0% 0%;
-  --popover-foreground: 0 0% 100%;
-
-  --primary: 0 0% 100%;
-  --primary-foreground: 0 0% 0%;
-
-  --secondary: 0 0% 10%;
-  --secondary-foreground: 0 0% 100%;
-
-  --muted: 0 0% 10%;
-  --muted-foreground: 0 0% 70%;
-
-  --accent: 0 0% 10%;
-  --accent-foreground: 0 0% 100%;
-
+  --background: 240 10% 3.9%;
+  --foreground: 0 0% 92%;
+  --card: 240 10% 3.9%;
+  --card-foreground: 0 0% 92%;
+  --popover: 240 10% 3.9%;
+  --popover-foreground: 0 0% 92%;
+  --primary: 0 0% 92%;
+  --primary-foreground: 240 5.9% 10%;
+  --secondary: 240 3.7% 25%;
+  --secondary-foreground: 0 0% 92%;
+  --muted: 240 3.7% 15.9%;
+  --muted-foreground: 240 5% 64.9%;
+  --accent: 240 3.7% 15.9%;
+  --accent-foreground: 0 0% 92%;
   --destructive: 0 62.8% 30.6%;
-  --destructive-foreground: 0 0% 100%;
-
-  --border: 0 0% 10%;
-  --input: 0 0% 10%;
-  --ring: 0 0% 100%;
+  --destructive-foreground: 0 0% 92%;
+  --border: 240 3.7% 10%;
+  --input: 240 3.7% 15.9%;
+  --ring: 240 4.9% 60%;
 }
 
 /* Manual light theme override (for user preference) */
