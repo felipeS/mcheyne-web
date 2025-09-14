@@ -26,14 +26,14 @@ export function ProgressTracker() {
   const percentage = total > 0 ? Math.round((completed / total) * 100) : 0;
 
   return (
-    <div className="w-full px-4 pt-4 sm:px-6 lg:px-8">
-      <div className="relative h-4 overflow-hidden rounded-full bg-gray-200">
+    <div className="w-full px-4 pt-2 sm:px-6 lg:px-8">
+      <div className="relative h-2 overflow-hidden rounded-full bg-gray-100">
         <div
-          className="h-full bg-green-500"
+          className="h-full bg-green-400"
           style={{ width: `${percentage}%` }}
         />
       </div>
-      <p className="mt-2 text-center text-sm text-gray-600">
+      <p className="mt-1 text-center text-xs text-gray-500">
         {completed} of {total} readings completed ({percentage}%)
       </p>
     </div>
