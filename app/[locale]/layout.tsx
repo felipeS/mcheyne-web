@@ -1,13 +1,15 @@
 import { ReactNode } from "react";
 import "../globals.css";
 import { ClientProviders } from "@/components/client-providers";
+import { PlanProvider } from "@/context/PlanProvider";
+import { ProgressTracker } from "@/components/progress-tracker";
 
 export default async function LocaleLayout({
   children,
   params,
 }: {
   children: ReactNode;
-  params: Promise<{ locale: string }>;
+  params: Promise<{ locale:string }>;
 }) {
   const { locale } = await params;
   const messages = (await import(`../../messages/${locale}.json`)).default;
@@ -77,7 +79,10 @@ export default async function LocaleLayout({
       </head>
       <body>
         <ClientProviders locale={locale} messages={messages}>
-          {children}
+          <PlanProvider>
+            <ProgressTracker />
+            {children}
+          </PlanProvider>
         </ClientProviders>
       </body>
     </html>
