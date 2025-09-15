@@ -61,7 +61,7 @@ export function ProgressTracker() {
       </p>
       {missedDays > 0 && (
         <p className="mt-1 text-center text-xs text-red-500">
-          You've missed {missedDays} {missedDays === 1 ? "day" : "days"}.
+          You&apos;ve missed {missedDays} {missedDays === 1 ? "day" : "days"}.
         </p>
       )}
     </div>
