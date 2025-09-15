@@ -80,8 +80,8 @@ export default async function LocaleLayout({
       <body>
         <ClientProviders locale={locale} messages={messages}>
           <PlanProvider>
-            <ProgressTracker />
             {children}
+            <ProgressTracker />
           </PlanProvider>
         </ClientProviders>
       </body>
