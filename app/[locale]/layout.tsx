@@ -2,7 +2,6 @@ import { ReactNode } from "react";
 import "../globals.css";
 import { ClientProviders } from "@/components/client-providers";
 import { PlanProvider } from "@/context/PlanProvider";
-import { ProgressTracker } from "@/components/progress-tracker";
 
 export default async function LocaleLayout({
   children,
@@ -81,7 +80,6 @@ export default async function LocaleLayout({
         <ClientProviders locale={locale} messages={messages}>
           <PlanProvider>
             {children}
-            <ProgressTracker />
           </PlanProvider>
         </ClientProviders>
       </body>

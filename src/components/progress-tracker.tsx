@@ -60,9 +60,11 @@ export function ProgressTracker() {
         {completed} of {total} readings completed ({percentage}%)
       </p>
       {missedDays > 0 && (
-        <p className="mt-1 text-center text-xs text-red-500">
-          You&apos;ve missed {missedDays} {missedDays === 1 ? "day" : "days"}.
-        </p>
+        <div className="text-center mt-1">
+          <p className="inline-block border border-gray-300 rounded-full px-2 py-0.5 text-xs text-gray-600">
+            You&apos;ve missed {missedDays} {missedDays === 1 ? "day" : "days"}.
+          </p>
+        </div>
       )}
     </div>
   );
