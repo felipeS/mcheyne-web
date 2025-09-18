@@ -32,6 +32,10 @@
     "importProgress": "Import Progress (pick a start date in the last year)",
     "next": "Next"
   },
+  "ProgressTracker": {
+    "progress": "{completed} of {total} readings completed ({percentage}%)",
+    "missedDays": "You've missed {count, plural, one {# day} other {# days}}."
+  },
   "books": {
     "leap": "Happy Leap Year!",
     "Genesis": "Genesis",

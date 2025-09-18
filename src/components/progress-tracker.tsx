@@ -2,8 +2,10 @@
 
 import { usePlan } from "@/context/PlanProvider";
 import { useMemo } from "react";
+import { useTranslations } from "next-intl";
 
 export function ProgressTracker() {
+  const t = useTranslations("ProgressTracker");
   const { selections, hasRead, indexForToday, onboarded } = usePlan();
 
   const { total, completed } = useMemo(() => {
@@ -57,12 +59,12 @@ export function ProgressTracker() {
         />
       </div>
       <p className="mt-1 text-center text-xs text-gray-500">
-        {completed} of {total} readings completed ({percentage}%)
+        {t("progress", { completed, total, percentage })}
       </p>
       {missedDays > 0 && (
         <div className="text-center mt-1">
           <p className="inline-block border border-gray-300 rounded-full px-2 py-0.5 text-xs text-gray-600">
-            You&apos;ve missed {missedDays} {missedDays === 1 ? "day" : "days"}.
+            {t("missedDays", { count: missedDays })}
           </p>
         </div>
       )}
