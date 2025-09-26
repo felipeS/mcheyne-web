@@ -52,9 +52,9 @@ export function ProgressTracker() {
 
   return (
     <div className="w-full px-4 pt-2 sm:px-6 lg:px-8">
-      <div className="relative h-2 overflow-hidden rounded-full bg-gray-100">
+      <div className="relative h-2 overflow-hidden rounded-full bg-gray-200 dark:bg-gray-700">
         <div
-          className="h-full bg-green-400"
+          className="h-full bg-green-500 dark:bg-green-400"
           style={{ width: `${percentage}%` }}
         />
       </div>
