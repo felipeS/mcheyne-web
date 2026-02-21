@@ -3,7 +3,18 @@
     "title": "El plan de M'Cheyne",
     "subtitle": "Lectura bíblica diaria",
     "today": "Hoy",
-    "dateLabel": "{daysFromToday, plural, =0 {Hoy} other {{daysFromToday, number} días desde hoy}}"
+    "dateLabel": "{daysFromToday, plural, =0 {Hoy} other {{daysFromToday, number} días desde hoy}}",
+    "progressTitle": "Tu progreso de lectura",
+    "progressToday": "Hoy",
+    "progressTodayValue": "{read} de {total} pasajes",
+    "progressDays": "Días del plan",
+    "progressDaysValue": "{completed} de {total} completos",
+    "progressPassages": "Pasajes",
+    "progressPassagesValue": "{completed} de {total} leídos",
+    "progressMissedDays": "Días perdidos",
+    "progressMissedDaysValue": "{count, plural, =0 {Sin días perdidos} one {# día} other {# días}}",
+    "progressSummary": "{completed} de {total} lecturas completadas ({percent}%)",
+    "progressMissedDaysSentence": "{count, plural, =0 {No has perdido ningún día.} one {Has perdido # día.} other {Has perdido # días.}}"
   },
   "theme": {
     "toggleTheme": "Cambiar tema",
