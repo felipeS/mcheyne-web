@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 
 export function Header({ onSettingsClick }: { onSettingsClick: () => void }) {
   const t = useTranslations("app");
+  const tSettings = useTranslations("settings");
 
   return (
     <div className="flex items-center justify-between w-full max-w-md">
@@ -18,7 +19,12 @@ export function Header({ onSettingsClick }: { onSettingsClick: () => void }) {
           </div>
         </div>
       </div>
-      <Button variant="outline" size="icon" onClick={onSettingsClick}>
+      <Button
+        variant="outline"
+        size="icon"
+        onClick={onSettingsClick}
+        aria-label={tSettings("open")}
+      >
         <Settings className="h-4 w-4" />
       </Button>
     </div>

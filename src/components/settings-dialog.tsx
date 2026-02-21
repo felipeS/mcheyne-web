@@ -18,12 +18,19 @@ import { useRouter } from "next/navigation";
 import { ThemeToggle } from "./theme-toggle";
 import { useSettings } from "@/context/SettingsContext";
 import { formatDateInput } from "@/lib/dateUtils";
+import { locales } from "@/lib/i18n";
 import {
   Dropdown,
   DropdownTrigger,
   DropdownMenu,
   DropdownMenuItem,
 } from "./ui/dropdown";
+
+const localeToKey = {
+  en: "english",
+  es: "spanish",
+  de: "german",
+} as const;
 
 export function SettingsDialog() {
   const t = useTranslations("settings");
@@ -57,21 +64,23 @@ export function SettingsDialog() {
               <div className="text-md font-normal">{t("language")}</div>
               <Dropdown minWidth={100}>
                 <DropdownTrigger className="min-w-[100px]">
-                  {currentLocale === "en" ? t("english") : t("spanish")}
+                  {t(
+                    localeToKey[currentLocale as keyof typeof localeToKey] ||
+                      "english"
+                  )}
                 </DropdownTrigger>
                 <DropdownMenu>
-                  <DropdownMenuItem
-                    onClick={() => handleLanguageChange("en")}
-                    className="first:rounded-t-md"
-                  >
-                    {t("english")}
-                  </DropdownMenuItem>
-                  <DropdownMenuItem
-                    onClick={() => handleLanguageChange("es")}
-                    className="last:rounded-b-md"
-                  >
-                    {t("spanish")}
-                  </DropdownMenuItem>
+                  {locales.map((locale, index) => (
+                    <DropdownMenuItem
+                      key={locale}
+                      onClick={() => handleLanguageChange(locale)}
+                      className={`${index === 0 ? "rounded-t-md" : ""} ${
+                        index === locales.length - 1 ? "rounded-b-md" : ""
+                      }`}
+                    >
+                      {t(localeToKey[locale as keyof typeof localeToKey])}
+                    </DropdownMenuItem>
+                  ))}
                 </DropdownMenu>
               </Dropdown>
             </div>

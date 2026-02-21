@@ -1,6 +1,6 @@
 "use client"
 
-import {createContext, useContext, useEffect, useMemo, useState} from 'react'
+import {createContext, useContext, useEffect, useMemo, useState, useCallback} from 'react'
 import { buildSelectionsWithLeap, indexForDateFromStartDate, v2Key } from '@/lib/planConstants'
 
 export type PassageState = Record<string, boolean>
@@ -88,18 +88,18 @@ export function PlanProvider({ children }: { children: React.ReactNode }) {
     setSelectedIndex(indexForToday)
   }, [indexForToday])
 
-  function setStartDate(d: Date) {
+  const setStartDate = useCallback((d: Date) => {
     setStartDateState(d)
     localStorage.setItem(LS_KEYS.startDate, d.toISOString())
-  }
+  }, [])
 
-  function resetAll() {
+  const resetAll = useCallback(() => {
     setPassages({})
     persistPassages({})
     setStartDate(new Date())
-  }
+  }, [setStartDate])
 
-  function changeStartDate(d: Date) {
+  const changeStartDate = useCallback((d: Date) => {
     // Reset and mark everything up to today complete
     resetAll()
     setStartDate(d)
@@ -112,35 +112,35 @@ export function PlanProvider({ children }: { children: React.ReactNode }) {
     }
     setPassages(newPassages)
     persistPassages(newPassages)
-  }
+  }, [resetAll, setStartDate, selections])
 
-  function setSelfPaced(v: boolean) {
+  const setSelfPaced = useCallback((v: boolean) => {
     setSelfPacedState(v)
     localStorage.setItem(LS_KEYS.selfPaced, String(v))
-  }
+  }, [])
 
-  function hasRead(desc: string, id: number) {
+  const hasRead = useCallback((desc: string, id: number) => {
     return !!passages[v2Key(desc, id)]
-  }
+  }, [passages])
 
-  function toggleRead(desc: string, id: number) {
+  const toggleRead = useCallback((desc: string, id: number) => {
     const key = v2Key(desc, id)
     const next = { ...passages, [key]: !passages[key] }
     if (!next[key]) delete next[key]
     setPassages(next)
     persistPassages(next)
-  }
+  }, [passages])
 
-  function getSelection(index?: number) {
+  const getSelection = useCallback((index?: number) => {
     return selections[index ?? indexForToday]
-  }
+  }, [selections, indexForToday])
 
-  function setOnboarded(v: boolean) {
+  const setOnboarded = useCallback((v: boolean) => {
     setOnboardedState(v)
     localStorage.setItem(LS_KEYS.onboarded, String(v))
-  }
+  }, [])
 
-  const value: PlanContextType = {
+  const value: PlanContextType = useMemo(() => ({
     startDate,
     setStartDate,
     changeStartDate,
@@ -155,7 +155,21 @@ export function PlanProvider({ children }: { children: React.ReactNode }) {
     toggleRead,
     onboarded,
     setOnboarded
-  }
+  }), [
+    startDate,
+    setStartDate,
+    changeStartDate,
+    isSelfPaced,
+    setSelfPaced,
+    selections,
+    indexForToday,
+    selectedIndex,
+    getSelection,
+    hasRead,
+    toggleRead,
+    onboarded,
+    setOnboarded
+  ])
 
   return <PlanContext.Provider value={value}>{children}</PlanContext.Provider>
 }
@@ -165,4 +179,3 @@ export function usePlan() {
   if (!ctx) throw new Error('usePlan must be used within PlanProvider')
   return ctx
 }
-

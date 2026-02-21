@@ -111,6 +111,25 @@ describe("SettingsDialog", () => {
     });
   });
 
+  describe("Language Switcher", () => {
+    it("should switch to German when selected", async () => {
+      const push = jest.fn();
+      mockUseRouter.mockReturnValue({ push });
+      mockUseLocale.mockReturnValue("en");
+
+      render(<SettingsDialog />);
+
+      const languageTrigger = screen.getByText("english");
+      fireEvent.click(languageTrigger);
+
+      const germanOption = screen.getByText("german");
+      fireEvent.click(germanOption);
+
+      expect(document.cookie).toContain("NEXT_LOCALE=de");
+      expect(push).toHaveBeenCalledWith("/de");
+    });
+  });
+
   describe("Reset Plan", () => {
     it("should show confirmation and then reset the plan", async () => {
       const user = userEvent.setup();

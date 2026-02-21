@@ -18,6 +18,7 @@
     "language": "Idioma",
     "english": "Inglés",
     "spanish": "Español",
+    "german": "Alemán",
     "selfPaced": "Modo autodidacta",
     "startDate": "Fecha de inicio",
     "reset": "Restablecer plan",
@@ -31,10 +32,6 @@
     "selfPaced": "Modo autodidacta",
     "importProgress": "Importar progreso (elige una fecha de inicio del último año)",
     "next": "Siguiente"
-  },
-  "ProgressTracker": {
-    "progress": "{completed} de {total} lecturas completadas ({percentage}%)",
-    "missedDays": "Has perdido {count, plural, one {# día} other {# días}}."
   },
   "books": {
     "leap": "¡Feliz año bisiesto!",
