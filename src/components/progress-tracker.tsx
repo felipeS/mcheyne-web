@@ -1,6 +1,5 @@
 "use client";
 
-import { Card, CardContent } from "@/components/ui/card";
 import { usePlan } from "@/context/PlanProvider";
 import { useTranslations } from "next-intl";
 
@@ -27,8 +26,8 @@ export function ProgressTracker() {
   const missedDays = countMissedDaysSinceLastRead(selections, missedDaysStartIndex, hasRead);
 
   return (
-    <Card className="w-full max-w-md border-0 bg-transparent shadow-none">
-      <CardContent className="space-y-4 px-1 py-0">
+    <div className="w-full max-w-md">
+      <div className="space-y-2 px-1 py-0">
         <ProgressBar value={passageProgress} />
 
         <p className="text-center text-sm font-medium text-muted-foreground">
@@ -40,12 +39,12 @@ export function ProgressTracker() {
         </p>
 
         <div className="flex justify-center">
-          <div className="rounded-full border border-border px-4 py-1 text-xs text-muted-foreground">
+          <div className="rounded-full border border-border px-3 py-0.5 text-xs text-muted-foreground">
             {t("progressMissedDaysSentence", { count: missedDays })}
           </div>
         </div>
-      </CardContent>
-    </Card>
+      </div>
+    </div>
   );
 }
 
@@ -77,7 +76,7 @@ function countMissedDaysSinceLastRead(
 
 function ProgressBar({ value }: { value: number }) {
   return (
-    <div className="h-4 w-full overflow-hidden rounded-full bg-primary/20">
+    <div className="h-2 w-full overflow-hidden rounded-full bg-primary/20">
       <div className="h-full rounded-full bg-primary transition-all" style={{ width: `${value}%` }} />
     </div>
   );
