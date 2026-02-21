@@ -3,7 +3,18 @@
     "title": "Der M'Cheyne",
     "subtitle": "Täglicher Bibelleseplan",
     "today": "Heute",
-    "dateLabel": "{daysFromToday, plural, =0 {Heute} other {{daysFromToday, number} Tage ab heute}}"
+    "dateLabel": "{daysFromToday, plural, =0 {Heute} other {{daysFromToday, number} Tage ab heute}}",
+    "progressTitle": "Ihr Lesefortschritt",
+    "progressToday": "Heute",
+    "progressTodayValue": "{read} von {total} Abschnitten",
+    "progressDays": "Plantage",
+    "progressDaysValue": "{completed} von {total} abgeschlossen",
+    "progressPassages": "Abschnitte",
+    "progressPassagesValue": "{completed} von {total} gelesen",
+    "progressMissedDays": "Verpasste Tage",
+    "progressMissedDaysValue": "{count, plural, =0 {Keine verpassten Tage} one {# Tag} other {# Tage}}",
+    "progressSummary": "{completed} von {total} Lesungen abgeschlossen ({percent}%)",
+    "progressMissedDaysSentence": "{count, plural, =0 {Sie haben keine Tage verpasst.} one {Sie haben # Tag verpasst.} other {Sie haben # Tage verpasst.}}"
   },
   "theme": {
     "toggleTheme": "Design umschalten",
@@ -32,10 +43,6 @@
     "selfPaced": "Selbstgesteuerter Modus",
     "importProgress": "Fortschritt importieren (wählen Sie ein Startdatum im letzten Jahr)",
     "next": "Weiter"
-  },
-  "ProgressTracker": {
-    "progress": "{completed} von {total} Lesungen abgeschlossen ({percentage}%)",
-    "missedDays": "Sie haben {count, plural, one {# Tag} other {# Tage}} verpasst."
   },
   "books": {
     "leap": "Frohes Schaltjahr!",

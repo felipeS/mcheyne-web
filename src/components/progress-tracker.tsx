@@ -1,0 +1,85 @@
+"use client";
+
+import { usePlan } from "@/context/PlanProvider";
+import { useTranslations } from "next-intl";
+
+export function ProgressTracker() {
+  const { selections, selectedIndex, indexForToday, isSelfPaced, hasRead } = usePlan();
+  const t = useTranslations("app");
+
+  if (isSelfPaced) return null;
+
+  const nonLeapSelections = selections.filter((selection) => !selection.isLeap);
+
+  const totalPassages = nonLeapSelections.reduce(
+    (count, selection) => count + selection.passages.length,
+    0,
+  );
+
+  const readPassages = nonLeapSelections.reduce((count, selection) => {
+    return (
+      count +
+      selection.passages.filter((passage, passageIndex) => hasRead(passage, passageIndex)).length
+    );
+  }, 0);
+
+  const passageProgress = totalPassages === 0 ? 0 : Math.round((readPassages / totalPassages) * 100);
+  const missedDaysStartIndex = selectedIndex === indexForToday ? indexForToday - 1 : selectedIndex;
+  const missedDays = countMissedDaysSinceLastRead(selections, missedDaysStartIndex, hasRead);
+
+  return (
+    <div className="w-full max-w-md">
+      <div className="space-y-2 px-1 py-0">
+        <ProgressBar value={passageProgress} />
+
+        <p className="text-center text-sm font-medium text-muted-foreground">
+          {t("progressSummary", {
+            completed: readPassages,
+            total: totalPassages,
+            percent: passageProgress,
+          })}
+        </p>
+
+        <div className="flex justify-center">
+          <div className="rounded-full border border-border px-3 py-0.5 text-xs text-muted-foreground">
+            {t("progressMissedDaysSentence", { count: missedDays })}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function countMissedDaysSinceLastRead(
+  selections: { passages: string[]; isLeap?: boolean }[],
+  startIndex: number,
+  hasRead: (desc: string, id: number) => boolean,
+) {
+  if (!selections.length) return 0;
+
+  let missed = 0;
+
+  for (let index = startIndex; index >= 0; index -= 1) {
+    const selection = selections[index];
+    if (selection.isLeap) {
+      continue;
+    }
+
+    const hasAnyRead = selection.passages.some((passage, passageIndex) => hasRead(passage, passageIndex));
+    if (hasAnyRead) {
+      break;
+    }
+
+    missed += 1;
+  }
+
+  return missed;
+}
+
+function ProgressBar({ value }: { value: number }) {
+  return (
+    <div className="h-2 w-full overflow-hidden rounded-full bg-primary/20">
+      <div className="h-full rounded-full bg-primary transition-all" style={{ width: `${value}%` }} />
+    </div>
+  );
+}
