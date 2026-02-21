@@ -4,8 +4,10 @@ import { usePlan } from "@/context/PlanProvider";
 import { useTranslations } from "next-intl";
 
 export function ProgressTracker() {
-  const { selections, selectedIndex, indexForToday, hasRead } = usePlan();
+  const { selections, selectedIndex, indexForToday, isSelfPaced, hasRead } = usePlan();
   const t = useTranslations("app");
+
+  if (isSelfPaced) return null;
 
   const nonLeapSelections = selections.filter((selection) => !selection.isLeap);
 
