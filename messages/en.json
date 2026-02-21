@@ -34,7 +34,8 @@
   },
   "progress": {
     "title": "Progress",
-    "status": "{percent}% Complete"
+    "status": "{percent}% Complete",
+    "missedDays": "{count, plural, =1 {1 missed day} other {# missed days}}"
   },
   "books": {
     "leap": "Happy Leap Year!",

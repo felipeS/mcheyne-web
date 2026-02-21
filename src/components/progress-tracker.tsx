@@ -5,9 +5,10 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import { useTranslations } from "next-intl";
 import { useMemo } from "react";
+import { indexForDateFromStartDate } from "@/lib/planConstants";
 
 export function ProgressTracker() {
-  const { selections, hasRead, onboarded } = usePlan();
+  const { selections, hasRead, onboarded, isSelfPaced, startDate } = usePlan();
   const t = useTranslations("progress");
 
   const progress = useMemo(() => {
@@ -29,6 +30,31 @@ export function ProgressTracker() {
     return { total, completed };
   }, [selections, hasRead]);
 
+  const missedDays = useMemo(() => {
+    if (isSelfPaced) return 0;
+    let count = 0;
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
+    // Limit lookback to 365 days or until startDate
+    for (let i = 1; i <= 365; i++) {
+      const d = new Date(today);
+      d.setDate(d.getDate() - i);
+      // Stop if we reach before the start date
+      if (d < startDate) break;
+
+      const idx = indexForDateFromStartDate(d, startDate, selections.length);
+      const selection = selections[idx];
+
+      if (selection.passages.length === 0) continue;
+
+      const isRead = selection.passages.some((desc, id) => hasRead(desc, id));
+      if (isRead) break;
+      count++;
+    }
+    return count;
+  }, [isSelfPaced, selections, hasRead, startDate]);
+
   if (!onboarded) return null;
 
   const percentage =
@@ -44,8 +70,12 @@ export function ProgressTracker() {
       <CardContent>
         <div className="flex flex-col gap-2">
           <Progress value={percentage} className="h-2" />
-          <div className="text-xs text-muted-foreground text-right">
-            {t("status", { percent: percentage })}
+          <div className="flex justify-between items-center text-xs text-muted-foreground">
+            <div>
+              {missedDays > 0 &&
+                t("missedDays", { count: missedDays })}
+            </div>
+            <div>{t("status", { percent: percentage })}</div>
           </div>
         </div>
       </CardContent>

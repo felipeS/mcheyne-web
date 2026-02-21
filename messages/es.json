@@ -34,7 +34,8 @@
   },
   "progress": {
     "title": "Progreso",
-    "status": "{percent}% Completado"
+    "status": "{percent}% Completado",
+    "missedDays": "{count, plural, =1 {1 día perdido} other {# días perdidos}}"
   },
   "books": {
     "leap": "¡Feliz año bisiesto!",
