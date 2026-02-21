@@ -32,6 +32,10 @@
     "importProgress": "Importar progreso (elige una fecha de inicio del último año)",
     "next": "Siguiente"
   },
+  "progress": {
+    "title": "Progreso",
+    "status": "{percent}% Completado"
+  },
   "books": {
     "leap": "¡Feliz año bisiesto!",
     "Genesis": "Génesis",
