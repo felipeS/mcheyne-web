@@ -30,7 +30,7 @@ export function ProgressTracker() {
       <CardContent className="space-y-4 px-1 py-0">
         <ProgressBar value={passageProgress} />
 
-        <p className="text-center text-2xl font-medium tracking-tight text-foreground">
+        <p className="text-center text-sm font-medium text-muted-foreground">
           {t("progressSummary", {
             completed: readPassages,
             total: totalPassages,
@@ -39,7 +39,7 @@ export function ProgressTracker() {
         </p>
 
         <div className="flex justify-center">
-          <div className="rounded-full border border-border px-5 py-1.5 text-sm text-muted-foreground">
+          <div className="rounded-full border border-border px-4 py-1 text-xs text-muted-foreground">
             {t("progressMissedDaysSentence", { count: missedDays })}
           </div>
         </div>
