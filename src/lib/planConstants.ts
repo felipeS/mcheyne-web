@@ -383,14 +383,36 @@ export function buildSelectionsWithLeap(startDate: Date): Selection[] {
   // Insert leap day marker when Feb 29 exists between startDate and startDate+364 days
   let leapIndex = 0;
   let containsFeb29 = false;
-  for (let day = 0; day < 365; day++) {
-    const d = new Date(startDate.getTime() + day * DAY_IN_SECONDS * 1000);
-    if (d.getMonth() === 1 && d.getDate() === 29) {
-      // Feb = 1
-      containsFeb29 = true;
-      break;
+
+  const startYear = startDate.getFullYear();
+  // Check potential Feb 29 in current or next year
+  for (const year of [startYear, startYear + 1]) {
+    if (isLeapYear(year)) {
+      // Estimate index of Feb 29
+      const feb29 = new Date(year, 1, 29);
+      const startOfDay = new Date(
+        startDate.getFullYear(),
+        startDate.getMonth(),
+        startDate.getDate()
+      );
+
+      const diffDays = Math.round(
+        (feb29.getTime() - startOfDay.getTime()) / (DAY_IN_SECONDS * 1000)
+      );
+
+      if (diffDays >= 0 && diffDays < 365) {
+        // Verification: The original logic adds exactly 24h chunks.
+        // We verify if this calculated index actually hits Feb 29.
+        const d = new Date(
+          startDate.getTime() + diffDays * DAY_IN_SECONDS * 1000
+        );
+        if (d.getMonth() === 1 && d.getDate() === 29) {
+          containsFeb29 = true;
+          leapIndex = diffDays;
+          break;
+        }
+      }
     }
-    leapIndex++;
   }
   if (containsFeb29) {
     selections.splice(leapIndex, 0, { passages: [], isLeap: true });
