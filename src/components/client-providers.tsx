@@ -28,7 +28,9 @@ export function ClientProviders({
           <ServiceWorkerRegister />
           <div className="mx-auto max-w-screen-sm p-4 flex flex-col items-center gap-8">
             <HeaderWithSettings />
-            {children}
+            <main className="w-full flex flex-col items-center gap-8">
+              {children}
+            </main>
           </div>
           <Analytics />
         </SettingsProvider>
