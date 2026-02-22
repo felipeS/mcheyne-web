@@ -8,8 +8,8 @@ jest.mock("next-intl", () => ({
   useTranslations: () => (key: string) => key,
 }));
 
-jest.mock("./service-worker-register", () => ({
-  ServiceWorkerRegister: () => null,
+jest.mock("./ServiceWorkerUpdater", () => ({
+  ServiceWorkerUpdater: () => null,
 }));
 
 jest.mock("@vercel/analytics/react", () => ({
@@ -37,7 +37,6 @@ describe("ClientProviders", () => {
       </ClientProviders>
     );
 
-    // This should fail initially
     const main = screen.getByRole("main");
     expect(main).toBeInTheDocument();
     expect(main).toContainElement(screen.getByTestId("child"));
