@@ -1,7 +1,7 @@
 "use client";
 
 import { NextIntlClientProvider } from "next-intl";
-import { ServiceWorkerRegister } from "./service-worker-register";
+import { ServiceWorkerUpdater } from "./ServiceWorkerUpdater";
 import { Analytics } from "@vercel/analytics/react";
 import { Header } from "./header";
 import { SettingsProvider, useSettings } from "@/context/SettingsContext";
@@ -25,7 +25,7 @@ export function ClientProviders({
     <NextIntlClientProvider locale={locale} messages={messages} timeZone="UTC">
       <PostHogProvider>
         <SettingsProvider>
-          <ServiceWorkerRegister />
+          <ServiceWorkerUpdater />
           <div className="mx-auto max-w-screen-sm p-4 flex flex-col items-center gap-8">
             <HeaderWithSettings />
             {children}

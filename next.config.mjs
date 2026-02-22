@@ -1,3 +1,12 @@
+import withPWAInit from "@ducanh2912/next-pwa";
+
+const withPWA = withPWAInit({
+  dest: "public",
+  register: false,
+  skipWaiting: false,
+  disable: process.env.NODE_ENV === "development",
+});
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
@@ -18,4 +27,4 @@ const nextConfig = {
   skipTrailingSlashRedirect: true,
 }
 
-export default nextConfig
+export default withPWA(nextConfig);
