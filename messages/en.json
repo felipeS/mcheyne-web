@@ -3,7 +3,18 @@
     "title": "The M'Cheyne",
     "subtitle": "Daily Bible Reading Plan",
     "today": "Today",
-    "dateLabel": "{daysFromToday, plural, =0 {Today} other {{daysFromToday, number} days from today}}"
+    "dateLabel": "{daysFromToday, plural, =0 {Today} other {{daysFromToday, number} days from today}}",
+    "progressTitle": "Your reading progress",
+    "progressToday": "Today",
+    "progressTodayValue": "{read} of {total} passages",
+    "progressDays": "Plan days",
+    "progressDaysValue": "{completed} of {total} complete",
+    "progressPassages": "Passages",
+    "progressPassagesValue": "{completed} of {total} read",
+    "progressMissedDays": "Missed days",
+    "progressMissedDaysValue": "{count, plural, =0 {No missed days} one {# day} other {# days}}",
+    "progressSummary": "{completed} of {total} readings completed ({percent}%)",
+    "progressMissedDaysSentence": "{count, plural, =0 {You've missed no days.} one {You've missed # day.} other {You've missed # days.}}"
   },
   "theme": {
     "toggleTheme": "Toggle theme",
@@ -18,6 +29,7 @@
     "language": "Language",
     "english": "English",
     "spanish": "Spanish",
+    "german": "German",
     "selfPaced": "Self-Paced Mode",
     "startDate": "Start Date",
     "reset": "Reset Plan",
@@ -31,10 +43,6 @@
     "selfPaced": "Self-Paced Mode",
     "importProgress": "Import Progress (pick a start date in the last year)",
     "next": "Next"
-  },
-  "ProgressTracker": {
-    "progress": "{completed} of {total} readings completed ({percentage}%)",
-    "missedDays": "You've missed {count, plural, one {# day} other {# days}}."
   },
   "books": {
     "leap": "Happy Leap Year!",
