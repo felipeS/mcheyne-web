@@ -18,6 +18,7 @@ import { useRouter } from "next/navigation";
 import { ThemeToggle } from "./theme-toggle";
 import { useSettings } from "@/context/SettingsContext";
 import { formatDateInput } from "@/lib/dateUtils";
+import { locales, type Locale } from "@/lib/i18n";
 import {
   Dropdown,
   DropdownTrigger,
@@ -32,6 +33,12 @@ export function SettingsDialog() {
   const [confirmReset, setConfirmReset] = useState(false);
   const router = useRouter();
   const currentLocale = useLocale();
+
+  const localeLabelMap: Record<Locale, string> = {
+    en: t("english"),
+    es: t("spanish"),
+    de: t("german"),
+  };
 
   const handleLanguageChange = (newLocale: string) => {
     if (newLocale !== currentLocale) {
@@ -57,21 +64,24 @@ export function SettingsDialog() {
               <div className="text-md font-normal">{t("language")}</div>
               <Dropdown minWidth={100}>
                 <DropdownTrigger className="min-w-[100px]">
-                  {currentLocale === "en" ? t("english") : t("spanish")}
+                  {localeLabelMap[currentLocale as Locale] ?? currentLocale}
                 </DropdownTrigger>
                 <DropdownMenu>
-                  <DropdownMenuItem
-                    onClick={() => handleLanguageChange("en")}
-                    className="first:rounded-t-md"
-                  >
-                    {t("english")}
-                  </DropdownMenuItem>
-                  <DropdownMenuItem
-                    onClick={() => handleLanguageChange("es")}
-                    className="last:rounded-b-md"
-                  >
-                    {t("spanish")}
-                  </DropdownMenuItem>
+                  {locales.map((locale, index) => (
+                    <DropdownMenuItem
+                      key={locale}
+                      onClick={() => handleLanguageChange(locale)}
+                      className={
+                        index === 0
+                          ? "first:rounded-t-md"
+                          : index === locales.length - 1
+                          ? "last:rounded-b-md"
+                          : ""
+                      }
+                    >
+                      {localeLabelMap[locale]}
+                    </DropdownMenuItem>
+                  ))}
                 </DropdownMenu>
               </Dropdown>
             </div>
