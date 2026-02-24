@@ -34,7 +34,8 @@
     "reset": "Reset Plan",
     "resetConfirm": "All progress will be erased and a new plan will start today.",
     "cancel": "Cancel",
-    "close": "Close"
+    "close": "Close",
+    "german": "German"
   },
   "onboarding": {
     "title": "Welcome",
