@@ -107,5 +107,47 @@ describe("planConstants", () => {
       expect(leapDays).toHaveLength(1);
       expect(leapDays[0].passages).toEqual([]);
     });
+
+    it("should place leap day at correct index for Jan 1 start in leap year", () => {
+      const startDate = new Date("2024-01-01");
+      const selections = buildSelectionsWithLeap(startDate);
+      // Jan has 31 days. Feb 1-28 is 28 days. Total 59 days before Feb 29.
+      // So index 59 should be the leap day.
+      expect(selections[59].isLeap).toBe(true);
+    });
+
+    it("should not add leap day if start date is after Feb 29 in a leap year", () => {
+      const startDate = new Date("2024-03-01");
+      const selections = buildSelectionsWithLeap(startDate);
+      expect(selections).toHaveLength(RAW_PLAN_DATA.length);
+      expect(selections.some((sel) => sel.isLeap)).toBe(false);
+    });
+
+    it("should not add leap day if range ends just before Feb 29 of next year", () => {
+      // Start Mar 1, 2023. End date is Feb 28, 2024 (leap year).
+      // Range is 365 days. Feb 29 is the 366th day, so not included.
+      const startDate = new Date("2023-03-01");
+      const selections = buildSelectionsWithLeap(startDate);
+      expect(selections).toHaveLength(RAW_PLAN_DATA.length);
+      expect(selections.some((sel) => sel.isLeap)).toBe(false);
+    });
+
+    it("should add leap day if range includes Feb 29 of next year", () => {
+      // Start Mar 2, 2023. End date is Feb 29, 2024.
+      // Range is 365 days? No, Mar 2 2023 to Mar 2 2024 is 366 days.
+      // The logic loops for 365 days (0..364).
+      // Day 0: Mar 2 2023.
+      // Day 364: Feb 29 2024.
+      // So Feb 29 IS the last day.
+      const startDate = new Date("2023-03-02");
+      const selections = buildSelectionsWithLeap(startDate);
+      expect(selections).toHaveLength(RAW_PLAN_DATA.length + 1);
+      // The leap day should be the last one inserted?
+      // Index 364 in 0-based index corresponds to the 365th day.
+      // If we insert at 364, the array grows.
+      // Original length 365. Index 364 is the last element.
+      // We insert AT 364. So new element is at 364. Old 364 moves to 365.
+      expect(selections[364].isLeap).toBe(true);
+    });
   });
 });

@@ -7,7 +7,7 @@ This is a web application for following the M'Cheyne bible reading plan. It is b
 *   **Daily Reading Passages:** Displays the reading passages for each day of the year according to the M'Cheyne reading plan.
 *   **Progress Tracking:** Mark readings as complete and the app will save your progress in your browser's local storage.
 *   **Self-Paced Mode:** Don't want to follow a strict calendar? Use the self-paced mode to read at your own rhythm. The app will show you the next unread passages.
-*   **Localization:** The interface is available in English and Spanish.
+*   **Localization:** The interface is available in English, Spanish, and German.
 *   **Leap Day Support:** Includes special readings for leap years.
 
 ## Getting Started
@@ -35,7 +35,7 @@ To run the app in development mode, use the following command:
 npm run dev
 ```
 
-Open [http://localhost:3000/en](http://localhost:3000/en) to view it in your browser. The app supports English (`/en`) and Spanish (`/es`).
+Open [http://localhost:3000/en](http://localhost:3000/en) to view it in your browser. The app supports English (`/en`), Spanish (`/es`), and German (`/de`).
 
 ### Building for Production
 
@@ -99,5 +99,5 @@ Here is a high-level overview of the key directories in this project:
     *   `/src/components`: React components used throughout the application.
     *   `/src/context`: React context providers for managing global state.
     *   `/src/lib`: Utility functions and constants.
-*   `/messages`: Contains the localization files for `next-intl` (`en.json`, `es.json`).
+*   `/messages`: Contains the localization files for `next-intl` (`en.json`, `es.json`, `de.json`).
 *   `/public`: Static assets like images and fonts.

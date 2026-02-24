@@ -6,3 +6,8 @@ node_modules
 diary/*
 tsconfig.tsbuildinfo
 coverage/*
+
+# PWA files
+public/sw.js
+public/workbox-*.js
+public/worker-*.js

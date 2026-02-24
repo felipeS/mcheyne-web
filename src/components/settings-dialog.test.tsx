@@ -90,6 +90,19 @@ describe("SettingsDialog", () => {
     });
   });
 
+  describe("Language Selector", () => {
+    it("shows German as an available language", async () => {
+      const user = userEvent.setup();
+      render(<SettingsDialog />);
+
+      await user.click(screen.getByRole("button", { name: "english" }));
+
+      expect(screen.getAllByText("english").length).toBeGreaterThan(0);
+      expect(screen.getAllByText("spanish").length).toBeGreaterThan(0);
+      expect(screen.getAllByText("german").length).toBeGreaterThan(0);
+    });
+  });
+
   describe("Theme Switcher", () => {
     it("should cycle through light, dark, and system themes", async () => {
       localStorageMock.setItem("theme", "light");

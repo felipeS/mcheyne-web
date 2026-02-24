@@ -14,6 +14,7 @@ export default async function LocaleLayout({
   return (
     <html lang={locale}>
       <head>
+        <title>{messages.app.title}</title>
         <meta name="application-name" content="M'Cheyne Reading Plan" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="default" />
