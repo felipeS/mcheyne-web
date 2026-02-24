@@ -4,7 +4,7 @@ import { usePlan } from "@/context/PlanProvider";
 import { useTranslations } from "next-intl";
 
 export function ProgressTracker() {
-  const { selections, selectedIndex, indexForToday, isSelfPaced, hasRead } = usePlan();
+  const { selections, indexForToday, isSelfPaced, hasRead } = usePlan();
   const t = useTranslations("app");
 
   if (isSelfPaced) return null;
@@ -24,8 +24,7 @@ export function ProgressTracker() {
   }, 0);
 
   const passageProgress = totalPassages === 0 ? 0 : Math.round((readPassages / totalPassages) * 100);
-  const missedDaysStartIndex = selectedIndex === indexForToday ? indexForToday - 1 : selectedIndex;
-  const missedDays = countMissedDaysSinceLastRead(selections, missedDaysStartIndex, hasRead);
+  const missedDays = countMissedDaysSinceLastRead(selections, indexForToday - 1, hasRead);
 
   return (
     <div className="w-full max-w-md">
