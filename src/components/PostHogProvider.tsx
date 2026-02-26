@@ -9,9 +9,18 @@ export function PostHogProvider({ children }: { children: React.ReactNode }) {
     posthog.init(process.env.NEXT_PUBLIC_POSTHOG_KEY!, {
       api_host: "/ingest",
       ui_host: "https://eu.posthog.com",
-      defaults: '2025-05-24',
+      defaults: "2025-05-24",
       capture_exceptions: true,
       debug: process.env.NODE_ENV === "development",
+      loaded: (ph) => {
+        if (
+          window.location.hostname.includes("vercel.app") ||
+          window.location.hostname.includes("localhost") ||
+          window.location.hostname.includes(".local")
+        ) {
+          ph.opt_out_capturing()
+        }
+      },
     })
   }, [])
 
