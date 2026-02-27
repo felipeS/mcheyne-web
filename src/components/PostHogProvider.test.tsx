@@ -19,6 +19,7 @@ describe("PostHogProvider", () => {
 
   beforeEach(() => {
     jest.clearAllMocks()
+    localStorage.clear()
     // Mock document.documentElement.lang
     Object.defineProperty(document.documentElement, "lang", {
       value: "en",
@@ -33,6 +34,42 @@ describe("PostHogProvider", () => {
       configurable: true,
       writable: true,
     })
+    jest.useRealTimers()
+  })
+
+  it("sets first_seen_at property if not present in localStorage", () => {
+    const mockDate = new Date("2023-01-01T00:00:00.000Z")
+    jest.useFakeTimers()
+    jest.setSystemTime(mockDate)
+
+    render(
+      <PostHogProvider locale="en">
+        <div>Test Child</div>
+      </PostHogProvider>
+    )
+
+    expect(localStorage.getItem("first_seen_at")).toBe(mockDate.toISOString())
+    expect(posthog.setPersonProperties).toHaveBeenCalledWith({
+      first_seen_at: mockDate.toISOString(),
+    })
+  })
+
+  it("does not set first_seen_at property if already present in localStorage", () => {
+    const existingDate = "2022-01-01T00:00:00.000Z"
+    localStorage.setItem("first_seen_at", existingDate)
+
+    render(
+      <PostHogProvider locale="en">
+        <div>Test Child</div>
+      </PostHogProvider>
+    )
+
+    expect(localStorage.getItem("first_seen_at")).toBe(existingDate)
+    // Should verify it wasn't called with first_seen_at.
+    // However, setPersonProperties is also called for language, so we check specifically for first_seen_at call.
+    expect(posthog.setPersonProperties).not.toHaveBeenCalledWith(
+      expect.objectContaining({ first_seen_at: expect.any(String) })
+    )
   })
 
   it("initializes posthog and sets language property from document.documentElement.lang", () => {

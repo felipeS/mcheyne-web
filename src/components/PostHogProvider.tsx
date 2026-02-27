@@ -28,6 +28,12 @@ export function PostHogProvider({
         }
       },
     })
+
+    if (!localStorage.getItem("first_seen_at")) {
+      const now = new Date().toISOString()
+      localStorage.setItem("first_seen_at", now)
+      posthog.setPersonProperties({ first_seen_at: now })
+    }
   }, [])
 
   useEffect(() => {
