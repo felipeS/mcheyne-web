@@ -1,4 +1,4 @@
-import { render, rerender } from "@testing-library/react"
+import { render } from "@testing-library/react"
 import { PostHogProvider } from "./PostHogProvider"
 import posthog from "posthog-js"
 import React from "react"
