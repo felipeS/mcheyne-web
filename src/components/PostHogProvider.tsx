@@ -20,6 +20,10 @@ export function PostHogProvider({ children }: { children: React.ReactNode }) {
         ) {
           ph.opt_out_capturing()
         }
+
+        ph.setPersonProperties({
+          language: navigator.language.split("-")[0],
+        })
       },
     })
   }, [])
