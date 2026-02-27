@@ -23,7 +23,7 @@ export function ClientProviders({
 }) {
   return (
     <NextIntlClientProvider locale={locale} messages={messages} timeZone="UTC">
-      <PostHogProvider>
+      <PostHogProvider locale={locale}>
         <SettingsProvider>
           <ServiceWorkerUpdater />
           <div className="mx-auto max-w-screen-sm p-4 flex flex-col items-center gap-8">
