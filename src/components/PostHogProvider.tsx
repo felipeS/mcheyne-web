@@ -33,7 +33,7 @@ export function PostHogProvider({
   useEffect(() => {
     if (posthog) {
       posthog.setPersonProperties({
-        language: locale,
+        language: document.documentElement.lang || locale,
       })
     }
   }, [locale])
