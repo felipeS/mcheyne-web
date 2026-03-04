@@ -53,13 +53,13 @@ function persistPassages(p: PassageState) {
   localStorage.setItem(LS_KEYS.passages, JSON.stringify(p))
 }
 
-export function PlanProvider({ children }: { children: React.ReactNode }) {
+export function PlanProvider({ children, initialSelectedIndex }: { children: React.ReactNode, initialSelectedIndex?: number }) {
   const [hydrated, setHydrated] = useState(false)
   const [startDate, setStartDateState] = useState<Date>(new Date())
   const [isSelfPaced, setSelfPacedState] = useState<boolean>(false)
   const [passages, setPassages] = useState<PassageState>({})
   const [onboarded, setOnboardedState] = useState<boolean>(false)
-  const [selectedIndex, setSelectedIndex] = useState<number>(0)
+  const [selectedIndex, setSelectedIndex] = useState<number>(initialSelectedIndex ?? 0)
 
   // Hydrate from localStorage once on client
   useEffect(() => {
@@ -83,10 +83,11 @@ export function PlanProvider({ children }: { children: React.ReactNode }) {
     }
   }, [hydrated, isSelfPaced, selections, passages, startDate])
 
-  // Keep selectedIndex in sync with "today" when the plan basis changes
+  // Keep selectedIndex in sync with "today" when the plan basis changes, unless an initial index was provided
   useEffect(() => {
+    if (initialSelectedIndex !== undefined && !hydrated) return;
     setSelectedIndex(indexForToday)
-  }, [indexForToday])
+  }, [indexForToday, hydrated, initialSelectedIndex])
 
   const setStartDate = useCallback((d: Date) => {
     setStartDateState(d)

@@ -53,17 +53,10 @@ export default async function DayPage({
   const { id } = await params;
   const dayIndex = parseInt(id) - 1;
 
-  // Render the same structure as the main page, but initializing the PlanProvider
-  // with the specific day index could be ideal.
-  // For now, wrapping with standard context.
-
-  // We can inject `initialIndex` if PlanProvider supports it,
-  // or use an effect inside a client wrapper to jump to this day.
-  // We'll create a simple client wrapper `DayInitializer`.
+  // Initialize PlanProvider with initialSelectedIndex to prevent jumping to "today"
 
   return (
-    <PlanProvider>
-      <DayInitializer dayIndex={dayIndex} />
+    <PlanProvider initialSelectedIndex={dayIndex}>
       <ProgressTracker />
       <ReadingSelection />
       <DateNavigation />
@@ -71,6 +64,3 @@ export default async function DayPage({
     </PlanProvider>
   );
 }
-
-// Client component to sync the URL day with the plan's selected index
-import { DayInitializer } from "@/components/day-initializer";
