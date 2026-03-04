@@ -11,3 +11,5 @@ coverage/*
 public/sw.js
 public/workbox-*.js
 public/worker-*.js
+playwright-report/
+test-results/
