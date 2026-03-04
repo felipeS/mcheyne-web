@@ -1,4 +1,3 @@
-import { useTranslations, useLocale } from "next-intl";
 import { RAW_PLAN_DATA } from "@/lib/planConstants";
 import Link from "next/link";
 import { getTranslations } from "next-intl/server";
@@ -17,9 +16,13 @@ export async function generateMetadata({
   };
 }
 
-export default function PlanIndexPage() {
-  const t = useTranslations("app");
-  const locale = useLocale();
+export default async function PlanIndexPage({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}) {
+  const { locale } = await params;
+  const t = await getTranslations({ locale, namespace: "app" });
 
   return (
     <div className="w-full max-w-md flex flex-col gap-4">
