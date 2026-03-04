@@ -83,12 +83,12 @@ src/
 #### Unit Test
 
 ```typescript
-describe("isLeapYear", () => {
-  it("should return true for leap years", () => {
+describe('isLeapYear', () => {
+  it('should return true for leap years', () => {
     expect(isLeapYear(2024)).toBe(true);
   });
 
-  it("should return false for non-leap years", () => {
+  it('should return false for non-leap years', () => {
     expect(isLeapYear(2023)).toBe(false);
   });
 });
@@ -148,7 +148,7 @@ global.localStorage = localStorageMock;
 ### Context Providers
 
 ```typescript
-jest.mock("@/context/PlanProvider", () => ({
+jest.mock('@/context/PlanProvider', () => ({
   usePlan: () => mockUsePlan,
 }));
 ```
@@ -156,7 +156,7 @@ jest.mock("@/context/PlanProvider", () => ({
 ### Next.js Features
 
 ```typescript
-jest.mock("next/navigation", () => ({
+jest.mock('next/navigation', () => ({
   useRouter: () => ({
     push: jest.fn(),
     replace: jest.fn(),

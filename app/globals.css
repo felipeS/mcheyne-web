@@ -145,15 +145,15 @@ body {
 }
 
 /* Date input dark theme support */
-input[type="date"] {
+input[type='date'] {
   color-scheme: light dark;
 }
 
 /* Ensure date input respects theme colors */
-.dark input[type="date"] {
+.dark input[type='date'] {
   color-scheme: dark;
 }
 
-.light input[type="date"] {
+.light input[type='date'] {
   color-scheme: light;
 }

@@ -1,27 +1,27 @@
-"use client";
+'use client';
 
-import { render, screen, fireEvent, within } from "@testing-library/react";
-import userEvent from "@testing-library/user-event";
-import { SettingsDialog } from "./settings-dialog";
-import { usePlan } from "@/context/PlanProvider";
-import { useSettings } from "@/context/SettingsContext";
-import { useTranslations, useLocale } from "next-intl";
-import { useRouter } from "next/navigation";
+import { render, screen, fireEvent, within } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
+import { SettingsDialog } from './settings-dialog';
+import { usePlan } from '@/context/PlanProvider';
+import { useSettings } from '@/context/SettingsContext';
+import { useTranslations, useLocale } from 'next-intl';
+import { useRouter } from 'next/navigation';
 
-jest.mock("@/context/PlanProvider", () => ({
+jest.mock('@/context/PlanProvider', () => ({
   usePlan: jest.fn(),
 }));
 
-jest.mock("@/context/SettingsContext", () => ({
+jest.mock('@/context/SettingsContext', () => ({
   useSettings: jest.fn(),
 }));
 
-jest.mock("next-intl", () => ({
+jest.mock('next-intl', () => ({
   useTranslations: jest.fn(),
   useLocale: jest.fn(),
 }));
 
-jest.mock("next/navigation", () => ({
+jest.mock('next/navigation', () => ({
   useRouter: jest.fn(),
 }));
 
@@ -48,11 +48,11 @@ const localStorageMock = (() => {
   };
 })();
 
-Object.defineProperty(window, "localStorage", {
+Object.defineProperty(window, 'localStorage', {
   value: localStorageMock,
 });
 
-describe("SettingsDialog", () => {
+describe('SettingsDialog', () => {
   const t = (key: string) => key;
 
   beforeEach(() => {
@@ -62,7 +62,7 @@ describe("SettingsDialog", () => {
     mockUsePlan.mockReturnValue({
       isSelfPaced: false,
       setSelfPaced: jest.fn(),
-      startDate: new Date("2024-01-01"),
+      startDate: new Date('2024-01-01'),
       changeStartDate: mockChangeStartDate,
     });
     mockUseSettings.mockReturnValue({
@@ -73,89 +73,89 @@ describe("SettingsDialog", () => {
     mockUseRouter.mockReturnValue({
       push: jest.fn(),
     });
-    mockUseLocale.mockReturnValue("en");
+    mockUseLocale.mockReturnValue('en');
   });
 
-  describe("Self-Paced Mode", () => {
-    it("toggles the visibility of the start date picker", () => {
+  describe('Self-Paced Mode', () => {
+    it('toggles the visibility of the start date picker', () => {
       const { rerender } = render(<SettingsDialog />);
-      expect(screen.getByLabelText("startDate")).toBeInTheDocument();
+      expect(screen.getByLabelText('startDate')).toBeInTheDocument();
 
       mockUsePlan.mockReturnValue({
         ...mockUsePlan(),
         isSelfPaced: true,
       });
       rerender(<SettingsDialog />);
-      expect(screen.queryByLabelText("startDate")).not.toBeInTheDocument();
+      expect(screen.queryByLabelText('startDate')).not.toBeInTheDocument();
     });
   });
 
-  describe("Language Selector", () => {
-    it("shows German as an available language", async () => {
+  describe('Language Selector', () => {
+    it('shows German as an available language', async () => {
       const user = userEvent.setup();
       render(<SettingsDialog />);
 
-      await user.click(screen.getByRole("button", { name: "english" }));
+      await user.click(screen.getByRole('button', { name: 'english' }));
 
-      expect(screen.getAllByText("english").length).toBeGreaterThan(0);
-      expect(screen.getAllByText("spanish").length).toBeGreaterThan(0);
-      expect(screen.getAllByText("german").length).toBeGreaterThan(0);
+      expect(screen.getAllByText('english').length).toBeGreaterThan(0);
+      expect(screen.getAllByText('spanish').length).toBeGreaterThan(0);
+      expect(screen.getAllByText('german').length).toBeGreaterThan(0);
     });
   });
 
-  describe("Theme Switcher", () => {
-    it("should cycle through light, dark, and system themes", async () => {
-      localStorageMock.setItem("theme", "light");
+  describe('Theme Switcher', () => {
+    it('should cycle through light, dark, and system themes', async () => {
+      localStorageMock.setItem('theme', 'light');
       render(<SettingsDialog />);
-      const themeButton = screen.getByLabelText("toggleTheme");
-      await screen.findByText("light");
+      const themeButton = screen.getByLabelText('toggleTheme');
+      await screen.findByText('light');
 
       fireEvent.click(themeButton);
-      expect(await screen.findByText("dark")).toBeInTheDocument();
-      expect(localStorage.getItem("theme")).toBe("dark");
+      expect(await screen.findByText('dark')).toBeInTheDocument();
+      expect(localStorage.getItem('theme')).toBe('dark');
 
       fireEvent.click(themeButton);
-      expect(await screen.findByText("system")).toBeInTheDocument();
-      expect(localStorage.getItem("theme")).toBe("system");
+      expect(await screen.findByText('system')).toBeInTheDocument();
+      expect(localStorage.getItem('theme')).toBe('system');
 
       fireEvent.click(themeButton);
-      expect(await screen.findByText("light")).toBeInTheDocument();
-      expect(localStorage.getItem("theme")).toBe("light");
+      expect(await screen.findByText('light')).toBeInTheDocument();
+      expect(localStorage.getItem('theme')).toBe('light');
     });
   });
 
-  describe("Reset Plan", () => {
-    it("should show confirmation and then reset the plan", async () => {
+  describe('Reset Plan', () => {
+    it('should show confirmation and then reset the plan', async () => {
       const user = userEvent.setup();
       render(<SettingsDialog />);
 
-      const resetButton = screen.getByRole("button", { name: "reset" });
+      const resetButton = screen.getByRole('button', { name: 'reset' });
       await user.click(resetButton);
 
-      const confirmDialog = screen.getByText("resetConfirm").parentElement;
-      const confirmButton = within(confirmDialog).getByRole("button", {
-        name: "reset",
+      const confirmDialog = screen.getByText('resetConfirm').parentElement;
+      const confirmButton = within(confirmDialog).getByRole('button', {
+        name: 'reset',
       });
       await user.click(confirmButton);
 
       expect(mockChangeStartDate).toHaveBeenCalled();
     });
 
-    it("should cancel the reset operation when cancel is clicked", async () => {
+    it('should cancel the reset operation when cancel is clicked', async () => {
       const user = userEvent.setup();
       render(<SettingsDialog />);
 
-      const resetButton = screen.getByRole("button", { name: "reset" });
+      const resetButton = screen.getByRole('button', { name: 'reset' });
       await user.click(resetButton);
 
-      const confirmDialog = screen.getByText("resetConfirm").parentElement;
-      const cancelButton = within(confirmDialog).getByRole("button", {
-        name: "cancel",
+      const confirmDialog = screen.getByText('resetConfirm').parentElement;
+      const cancelButton = within(confirmDialog).getByRole('button', {
+        name: 'cancel',
       });
       await user.click(cancelButton);
 
       expect(mockChangeStartDate).not.toHaveBeenCalled();
-      expect(screen.queryByText("resetConfirm")).not.toBeInTheDocument();
+      expect(screen.queryByText('resetConfirm')).not.toBeInTheDocument();
     });
   });
 });

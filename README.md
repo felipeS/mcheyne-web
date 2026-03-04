@@ -4,11 +4,11 @@ This is a web application for following the M'Cheyne bible reading plan. It is b
 
 ## Features
 
-*   **Daily Reading Passages:** Displays the reading passages for each day of the year according to the M'Cheyne reading plan.
-*   **Progress Tracking:** Mark readings as complete and the app will save your progress in your browser's local storage.
-*   **Self-Paced Mode:** Don't want to follow a strict calendar? Use the self-paced mode to read at your own rhythm. The app will show you the next unread passages.
-*   **Localization:** The interface is available in English, Spanish, and German.
-*   **Leap Day Support:** Includes special readings for leap years.
+- **Daily Reading Passages:** Displays the reading passages for each day of the year according to the M'Cheyne reading plan.
+- **Progress Tracking:** Mark readings as complete and the app will save your progress in your browser's local storage.
+- **Self-Paced Mode:** Don't want to follow a strict calendar? Use the self-paced mode to read at your own rhythm. The app will show you the next unread passages.
+- **Localization:** The interface is available in English, Spanish, and German.
+- **Leap Day Support:** Includes special readings for leap years.
 
 ## Getting Started
 
@@ -21,6 +21,7 @@ You will need to have [Node.js](https://nodejs.org/) and [npm](https://www.npmjs
 ### Installation
 
 Install the project dependencies:
+
 ```bash
 npm install
 ```
@@ -83,21 +84,21 @@ npm run format
 
 ## Technology Stack
 
-*   [Next.js](https://nextjs.org/) - React framework for production.
-*   [TypeScript](https://www.typescriptlang.org/) - Typed superset of JavaScript.
-*   [Tailwind CSS](https://tailwindcss.com/) - A utility-first CSS framework.
-*   [Jest](https://jestjs.io/) - JavaScript testing framework.
-*   [next-intl](https://next-intl-docs.vercel.app/) - Internationalization for Next.js.
-*   [Radix UI](https://www.radix-ui.com/) - Unstyled, accessible UI components.
+- [Next.js](https://nextjs.org/) - React framework for production.
+- [TypeScript](https://www.typescriptlang.org/) - Typed superset of JavaScript.
+- [Tailwind CSS](https://tailwindcss.com/) - A utility-first CSS framework.
+- [Jest](https://jestjs.io/) - JavaScript testing framework.
+- [next-intl](https://next-intl-docs.vercel.app/) - Internationalization for Next.js.
+- [Radix UI](https://www.radix-ui.com/) - Unstyled, accessible UI components.
 
 ## Project Structure
 
 Here is a high-level overview of the key directories in this project:
 
-*   `/app`: Contains the core application code, following the Next.js App Router structure. The routes are organized by locale (`[locale]`).
-*   `/src`: Contains reusable components, context providers, utility functions, and type definitions.
-    *   `/src/components`: React components used throughout the application.
-    *   `/src/context`: React context providers for managing global state.
-    *   `/src/lib`: Utility functions and constants.
-*   `/messages`: Contains the localization files for `next-intl` (`en.json`, `es.json`, `de.json`).
-*   `/public`: Static assets like images and fonts.
+- `/app`: Contains the core application code, following the Next.js App Router structure. The routes are organized by locale (`[locale]`).
+- `/src`: Contains reusable components, context providers, utility functions, and type definitions.
+  - `/src/components`: React components used throughout the application.
+  - `/src/context`: React context providers for managing global state.
+  - `/src/lib`: Utility functions and constants.
+- `/messages`: Contains the localization files for `next-intl` (`en.json`, `es.json`, `de.json`).
+- `/public`: Static assets like images and fonts.
