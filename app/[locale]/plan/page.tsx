@@ -1,4 +1,4 @@
-import { useTranslations } from "next-intl";
+import { useTranslations, useLocale } from "next-intl";
 import { RAW_PLAN_DATA } from "@/lib/planConstants";
 import Link from "next/link";
 import { getTranslations } from "next-intl/server";
@@ -19,6 +19,7 @@ export async function generateMetadata({
 
 export default function PlanIndexPage() {
   const t = useTranslations("app");
+  const locale = useLocale();
 
   return (
     <div className="w-full max-w-md flex flex-col gap-4">
@@ -32,7 +33,7 @@ export default function PlanIndexPage() {
           return (
             <Link
               key={dayId}
-              href={`/day/${dayId}`}
+              href={`/${locale}/day/${dayId}`}
               className="p-4 border rounded hover:bg-accent/50 transition-colors"
             >
               <div className="font-semibold">Day {dayId}</div>
