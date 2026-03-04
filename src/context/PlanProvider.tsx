@@ -1,6 +1,6 @@
 "use client"
 
-import {createContext, useContext, useEffect, useMemo, useState, useCallback} from 'react'
+import {createContext, useContext, useEffect, useMemo, useState, useCallback, useRef} from 'react'
 import { buildSelectionsWithLeap, indexForDateFromStartDate, v2Key } from '@/lib/planConstants'
 
 export type PassageState = Record<string, boolean>
@@ -83,10 +83,36 @@ export function PlanProvider({ children, initialSelectedIndex }: { children: Rea
     }
   }, [hydrated, isSelfPaced, selections, passages, startDate])
 
-  // Keep selectedIndex in sync with "today" when the plan basis changes, unless an initial index was provided
+  // Keep selectedIndex in sync with "today" when the plan basis changes.
+  // We use a ref to ignore the initial burst of updates caused by hydration
+  // if an initialSelectedIndex was provided.
+  const hasHydratedRef = useRef(false)
+  const prevIndexForToday = useRef(indexForToday)
+
   useEffect(() => {
-    if (initialSelectedIndex !== undefined && !hydrated) return;
-    setSelectedIndex(indexForToday)
+    if (!hydrated) return
+
+    // Mark hydration complete for future updates
+    if (!hasHydratedRef.current) {
+      hasHydratedRef.current = true
+      prevIndexForToday.current = indexForToday
+
+      if (initialSelectedIndex !== undefined) {
+        // We initialized from URL, do not overwrite with today's index
+        return
+      } else {
+        // Initializing from standard load, jump to today's index
+        setSelectedIndex(indexForToday)
+        return
+      }
+    }
+
+    // After hydration is complete, only sync if indexForToday genuinely changes
+    // (e.g. from user changing start date or toggling self-paced mode)
+    if (indexForToday !== prevIndexForToday.current) {
+      prevIndexForToday.current = indexForToday
+      setSelectedIndex(indexForToday)
+    }
   }, [indexForToday, hydrated, initialSelectedIndex])
 
   const setStartDate = useCallback((d: Date) => {
