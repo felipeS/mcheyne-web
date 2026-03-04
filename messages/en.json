@@ -3,6 +3,7 @@
     "title": "The M'Cheyne",
     "subtitle": "Daily Bible Reading Plan",
     "today": "Today",
+    "day": "Day",
     "dateLabel": "{daysFromToday, plural, =0 {Today} other {{daysFromToday, number} days from today}}",
     "progressTitle": "Your reading progress",
     "progressToday": "Today",

@@ -3,6 +3,7 @@
     "title": "Der M'Cheyne-Plan",
     "subtitle": "Täglicher Bibelleseplan",
     "today": "Heute",
+    "day": "Tag",
     "dateLabel": "{daysFromToday, plural, =0 {Heute} other {{daysFromToday, number} Tage ab heute}}",
     "progressTitle": "Dein Lesefortschritt",
     "progressToday": "Heute",
