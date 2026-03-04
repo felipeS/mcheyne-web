@@ -3,6 +3,7 @@
     "title": "El plan de M'Cheyne",
     "subtitle": "Lectura bíblica diaria",
     "today": "Hoy",
+    "day": "Día",
     "dateLabel": "{daysFromToday, plural, =0 {Hoy} other {{daysFromToday, number} días desde hoy}}",
     "progressTitle": "Tu progreso de lectura",
     "progressToday": "Hoy",
