@@ -19,6 +19,7 @@ import { ThemeToggle } from "./theme-toggle";
 import { useSettings } from "@/context/SettingsContext";
 import { formatDateInput } from "@/lib/dateUtils";
 import { locales, type Locale } from "@/lib/i18n";
+import { haptic, hapticToggle } from "@/lib/haptics";
 import {
   Dropdown,
   DropdownTrigger,
@@ -43,6 +44,7 @@ export function SettingsDialog() {
   const handleLanguageChange = (newLocale: string) => {
     if (newLocale !== currentLocale) {
       // Set the locale cookie and redirect
+      haptic("success");
       document.cookie = `NEXT_LOCALE=${newLocale}; path=/; max-age=31536000`;
       router.push(`/${newLocale}`);
     }
@@ -87,7 +89,13 @@ export function SettingsDialog() {
             </div>
             <div className="flex items-center justify-between">
               <div className="text-md font-normal">{t("selfPaced")}</div>
-              <Switch checked={isSelfPaced} onCheckedChange={setSelfPaced} />
+              <Switch
+                checked={isSelfPaced}
+                onCheckedChange={(checked) => {
+                  hapticToggle(checked);
+                  setSelfPaced(checked);
+                }}
+              />
             </div>
             {!isSelfPaced && (
               <div className="flex items-center justify-between gap-4">
@@ -99,7 +107,10 @@ export function SettingsDialog() {
                   type="date"
                   className="w-auto"
                   value={formatDateInput(startDate)}
-                  onChange={(e) => changeStartDate(new Date(e.target.value))}
+                  onChange={(e) => {
+                    haptic("soft");
+                    changeStartDate(new Date(e.target.value));
+                  }}
                 />
               </div>
             )}
@@ -107,7 +118,10 @@ export function SettingsDialog() {
               {!confirmReset ? (
                 <Button
                   variant="destructive"
-                  onClick={() => setConfirmReset(true)}
+                  onClick={() => {
+                    haptic("warning");
+                    setConfirmReset(true);
+                  }}
                 >
                   {t("reset")}
                 </Button>
@@ -119,13 +133,17 @@ export function SettingsDialog() {
                   <div className="flex gap-2">
                     <Button
                       variant="outline"
-                      onClick={() => setConfirmReset(false)}
+                      onClick={() => {
+                        haptic("soft");
+                        setConfirmReset(false);
+                      }}
                     >
                       {t("cancel")}
                     </Button>
                     <Button
                       variant="destructive"
                       onClick={() => {
+                        haptic("warning");
                         changeStartDate(new Date());
                         setConfirmReset(false);
                       }}
@@ -138,7 +156,14 @@ export function SettingsDialog() {
             </div>
           </div>
           <DialogFooter>
-            <Button onClick={closeSettings}>{t("close")}</Button>
+            <Button
+              onClick={() => {
+                haptic("soft");
+                closeSettings();
+              }}
+            >
+              {t("close")}
+            </Button>
           </DialogFooter>
         </DialogContent>
       </Dialog>

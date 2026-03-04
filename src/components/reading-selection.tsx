@@ -5,6 +5,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { useTranslations } from "next-intl";
 import { splitPassage } from "@/lib/planConstants";
+import { hapticToggle } from "@/lib/haptics";
 
 export function ReadingSelection() {
   const { getSelection, hasRead, toggleRead, selectedIndex } = usePlan();
@@ -42,7 +43,10 @@ export function ReadingSelection() {
         return (
           <Button
             key={id}
-            onClick={() => toggleRead(desc, id)}
+            onClick={() => {
+              hapticToggle(!read);
+              toggleRead(desc, id);
+            }}
             variant={read ? "secondary" : "default"}
             className="justify-start h-16 rounded-full bg-accent text-accent-foreground hover:bg-accent/80"
           >

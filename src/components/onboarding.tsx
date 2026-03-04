@@ -7,6 +7,7 @@ import { useTranslations } from "next-intl";
 import { Switch } from "@/components/ui/switch";
 import { Label } from "./ui/label";
 import { Input } from "./ui/input";
+import { haptic, hapticToggle } from "@/lib/haptics";
 
 export function Onboarding() {
   const t = useTranslations("onboarding");
@@ -27,7 +28,13 @@ export function Onboarding() {
         <div className="text-sm text-muted-foreground">{t("intro")}</div>
         <div className="flex items-center justify-between">
           <div className="text-sm font-normal">{t("selfPaced")}</div>
-          <Switch checked={isSelfPaced} onCheckedChange={setSelfPaced} />
+          <Switch
+            checked={isSelfPaced}
+            onCheckedChange={(checked) => {
+              hapticToggle(checked);
+              setSelfPaced(checked);
+            }}
+          />
         </div>
         {!isSelfPaced && (
           <div className="flex items-center justify-between gap-4">
@@ -38,12 +45,22 @@ export function Onboarding() {
               id="startDate"
               type="date"
               className="w-auto"
-              onChange={(e) => changeStartDate(new Date(e.target.value))}
+              onChange={(e) => {
+                haptic("soft");
+                changeStartDate(new Date(e.target.value));
+              }}
             />
           </div>
         )}
         <div className="flex justify-end">
-          <Button onClick={() => setOnboarded(true)}>{t("next")}</Button>
+          <Button
+            onClick={() => {
+              haptic("success");
+              setOnboarded(true);
+            }}
+          >
+            {t("next")}
+          </Button>
         </div>
       </CardContent>
     </Card>

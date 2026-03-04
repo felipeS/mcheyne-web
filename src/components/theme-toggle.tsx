@@ -4,6 +4,7 @@ import { Moon, Sun, Monitor } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useTranslations } from "next-intl";
 import { useEffect, useState } from "react";
+import { haptic, hapticToggle } from "@/lib/haptics";
 
 export function ThemeToggle() {
   const [mounted, setMounted] = useState(false);
@@ -42,6 +43,12 @@ export function ThemeToggle() {
 
     const newTheme =
       theme === "light" ? "dark" : theme === "dark" ? "system" : "light";
+
+    if (newTheme === "system") {
+      haptic("soft");
+    } else {
+      hapticToggle(newTheme === "dark");
+    }
     setTheme(newTheme);
 
     if (typeof window !== "undefined") {
