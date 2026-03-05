@@ -53,7 +53,11 @@ export function ReadingSelection() {
             });
 
             if (isLastToRead) {
-              haptic.trigger("success");
+              // Crescendo effect for completion
+              haptic.trigger("light");
+              setTimeout(() => haptic.trigger("medium"), 100);
+              setTimeout(() => haptic.trigger("heavy"), 250);
+              setTimeout(() => haptic.trigger("success"), 500);
             } else {
               haptic.trigger("medium");
             }
