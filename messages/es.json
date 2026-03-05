@@ -15,7 +15,8 @@
     "progressMissedDays": "Días perdidos",
     "progressMissedDaysValue": "{count, plural, =0 {Sin días perdidos} one {# día} other {# días}}",
     "progressSummary": "{completed} de {total} lecturas completadas ({percent}%)",
-    "progressMissedDaysSentence": "{count, plural, =0 {No has perdido ningún día.} one {Has perdido # día.} other {Has perdido # días.}}"
+    "progressMissedDaysSentence": "{count, plural, =0 {No has perdido ningún día.} one {Has perdido # día.} other {Has perdido # días.}}",
+    "quote": "Por cada mirada a <italic>ti mismo</italic> — ¡da diez miradas a <italic>Cristo!</italic>"
   },
   "theme": {
     "toggleTheme": "Cambiar tema",

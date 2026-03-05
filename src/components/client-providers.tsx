@@ -1,6 +1,6 @@
 'use client';
 
-import { NextIntlClientProvider } from 'next-intl';
+import { NextIntlClientProvider, useTranslations } from 'next-intl';
 import { ServiceWorkerUpdater } from './ServiceWorkerUpdater';
 import { Analytics } from '@vercel/analytics/react';
 import { Header } from './header';
@@ -10,6 +10,17 @@ import { PostHogProvider } from './PostHogProvider';
 function HeaderWithSettings() {
   const { openSettings } = useSettings();
   return <Header onSettingsClick={openSettings} />;
+}
+
+function FooterQuote() {
+  const t = useTranslations('app');
+  return (
+    <footer className="w-full text-center text-sm text-muted-foreground/60 font-serif pb-4">
+      {t.rich('quote', {
+        italic: (chunks) => <i>{chunks}</i>,
+      })}
+    </footer>
+  );
 }
 
 export function ClientProviders({
@@ -26,9 +37,10 @@ export function ClientProviders({
       <PostHogProvider locale={locale}>
         <SettingsProvider>
           <ServiceWorkerUpdater />
-          <div className="mx-auto max-w-screen-sm p-4 flex flex-col items-center gap-8">
+          <div className="mx-auto max-w-screen-sm p-4 min-h-screen flex flex-col items-center gap-8">
             <HeaderWithSettings />
-            <main className="w-full flex flex-col items-center gap-8">{children}</main>
+            <main className="w-full flex-1 flex flex-col items-center gap-8">{children}</main>
+            <FooterQuote />
           </div>
           <Analytics />
         </SettingsProvider>
