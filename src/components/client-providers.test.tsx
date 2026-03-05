@@ -5,7 +5,11 @@ import React from 'react';
 // Mock the providers that require specific context/props
 jest.mock('next-intl', () => ({
   NextIntlClientProvider: ({ children }: { children: React.ReactNode }) => <div>{children}</div>,
-  useTranslations: () => (key: string) => key,
+  useTranslations: () => {
+    const t = (key: string) => key;
+    t.rich = (key: string) => key;
+    return t;
+  },
 }));
 
 jest.mock('./ServiceWorkerUpdater', () => ({

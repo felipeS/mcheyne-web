@@ -15,7 +15,8 @@
     "progressMissedDays": "Missed days",
     "progressMissedDaysValue": "{count, plural, =0 {No missed days} one {# day} other {# days}}",
     "progressSummary": "{completed} of {total} readings completed ({percent}%)",
-    "progressMissedDaysSentence": "{count, plural, =0 {You've missed no days.} one {You've missed # day.} other {You've missed # days.}}"
+    "progressMissedDaysSentence": "{count, plural, =0 {You've missed no days.} one {You've missed # day.} other {You've missed # days.}}",
+    "quote": "For every look at <italic>self</italic> — take ten looks at <italic>Christ!</italic>"
   },
   "theme": {
     "toggleTheme": "Toggle theme",
