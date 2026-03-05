@@ -15,7 +15,8 @@
     "progressMissedDays": "Verpasste Tage",
     "progressMissedDaysValue": "{count, plural, =0 {Keine verpassten Tage} one {# Tag} other {# Tage}}",
     "progressSummary": "{completed} von {total} Lesungen abgeschlossen ({percent}%)",
-    "progressMissedDaysSentence": "{count, plural, =0 {Du hast keinen Tag verpasst.} one {Du hast # Tag verpasst.} other {Du hast # Tage verpasst.}}"
+    "progressMissedDaysSentence": "{count, plural, =0 {Du hast keinen Tag verpasst.} one {Du hast # Tag verpasst.} other {Du hast # Tage verpasst.}}",
+    "quote": "Für jeden Blick auf <italic>dich selbst</italic> — richte zehn Blicke auf <italic>Christus!</italic>"
   },
   "theme": {
     "toggleTheme": "Design umschalten",
