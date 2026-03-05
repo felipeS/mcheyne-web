@@ -1,6 +1,6 @@
-"use client";
+'use client';
 
-import { createContext, useContext, useState, ReactNode } from "react";
+import { createContext, useContext, useState, ReactNode } from 'react';
 
 interface SettingsContextType {
   isOpen: boolean;
@@ -8,9 +8,7 @@ interface SettingsContextType {
   closeSettings: () => void;
 }
 
-const SettingsContext = createContext<SettingsContextType | undefined>(
-  undefined
-);
+const SettingsContext = createContext<SettingsContextType | undefined>(undefined);
 
 export function SettingsProvider({ children }: { children: ReactNode }) {
   const [isOpen, setIsOpen] = useState(false);
@@ -28,7 +26,7 @@ export function SettingsProvider({ children }: { children: ReactNode }) {
 export function useSettings() {
   const context = useContext(SettingsContext);
   if (context === undefined) {
-    throw new Error("useSettings must be used within a SettingsProvider");
+    throw new Error('useSettings must be used within a SettingsProvider');
   }
   return context;
 }

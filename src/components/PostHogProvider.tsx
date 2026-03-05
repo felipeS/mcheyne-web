@@ -1,48 +1,48 @@
-"use client"
+'use client';
 
-import posthog from "posthog-js"
-import { PostHogProvider as PHProvider } from "posthog-js/react"
-import { useEffect } from "react"
+import posthog from 'posthog-js';
+import { PostHogProvider as PHProvider } from 'posthog-js/react';
+import { useEffect } from 'react';
 
 export function PostHogProvider({
   children,
   locale,
 }: {
-  children: React.ReactNode
-  locale: string
+  children: React.ReactNode;
+  locale: string;
 }) {
   useEffect(() => {
     posthog.init(process.env.NEXT_PUBLIC_POSTHOG_KEY!, {
-      api_host: "/ingest",
-      ui_host: "https://eu.posthog.com",
-      defaults: "2025-05-24",
+      api_host: '/ingest',
+      ui_host: 'https://eu.posthog.com',
+      defaults: '2025-05-24',
       capture_exceptions: true,
-      debug: process.env.NODE_ENV === "development",
+      debug: process.env.NODE_ENV === 'development',
       loaded: (ph) => {
         if (
-          window.location.hostname.includes("vercel.app") ||
-          window.location.hostname.includes("localhost") ||
-          window.location.hostname.includes(".local")
+          window.location.hostname.includes('vercel.app') ||
+          window.location.hostname.includes('localhost') ||
+          window.location.hostname.includes('.local')
         ) {
-          ph.opt_out_capturing()
+          ph.opt_out_capturing();
         }
       },
-    })
+    });
 
-    if (!localStorage.getItem("first_seen_at")) {
-      const now = new Date().toISOString()
-      localStorage.setItem("first_seen_at", now)
-      posthog.setPersonProperties({ first_seen_at: now })
+    if (!localStorage.getItem('first_seen_at')) {
+      const now = new Date().toISOString();
+      localStorage.setItem('first_seen_at', now);
+      posthog.setPersonProperties({ first_seen_at: now });
     }
-  }, [])
+  }, []);
 
   useEffect(() => {
     if (posthog) {
       posthog.setPersonProperties({
         language: document.documentElement.lang || locale,
-      })
+      });
     }
-  }, [locale])
+  }, [locale]);
 
-  return <PHProvider client={posthog}>{children}</PHProvider>
+  return <PHProvider client={posthog}>{children}</PHProvider>;
 }

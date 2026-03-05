@@ -5,6 +5,7 @@ This file provides guidance to WARP (warp.dev) when working with code in this re
 Project: mcheyne-web (Next.js 15, TypeScript, Tailwind, next-intl)
 
 Common commands
+
 - Install dependencies
   ```bash path=null start=null
   npm install
@@ -33,6 +34,7 @@ Common commands
 - Tests: none configured (no test runner or scripts present).
 
 High-level architecture and structure
+
 - App Router with per-locale segment
   - Source: app/[locale]/
   - app/[locale]/layout.tsx is the root layout for each locale. It loads global CSS and wraps the page with client providers for i18n.
@@ -76,15 +78,15 @@ High-level architecture and structure
 - TypeScript and module resolution
   - Strict TS config with noEmit, JSX preserve, and Next plugin.
   - Path aliases (see tsconfig.json):
-    - @/components/* → src/components/*
-    - @/context/* → src/context/*
-    - @/lib/* → src/lib/*
-    - @/ui/* → src/components/ui/*
-    - @/messages/* → messages/*
+    - @/components/_ → src/components/_
+    - @/context/_ → src/context/_
+    - @/lib/_ → src/lib/_
+    - @/ui/_ → src/components/ui/_
+    - @/messages/_ → messages/_
 
 Important notes from README
+
 - Default locale is English under /en; Spanish under /es.
 - State persists to localStorage; clearing site data resets the plan.
 - Leap day handling: a special “leap” entry is inserted when Feb 29 occurs relative to the start date.
 - Book name localization: UI strings are localized; book names fall back to their keys unless provided in messages files.
-

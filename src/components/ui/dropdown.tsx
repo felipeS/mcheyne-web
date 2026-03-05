@@ -1,20 +1,20 @@
-"use client";
+'use client';
 
-import { ReactNode, useState, useEffect, useRef } from "react";
-import { ChevronDown } from "lucide-react";
-import { Button } from "./button";
+import { ReactNode, useState, useEffect, useRef } from 'react';
+import { ChevronDown } from 'lucide-react';
+import { Button } from './button';
 
 interface DropdownProps {
   children: [ReactNode, ReactNode];
   className?: string;
-  align?: "left" | "right";
+  align?: 'left' | 'right';
   minWidth?: number;
 }
 
 export function Dropdown({
   children,
-  className = "",
-  align = "right",
+  className = '',
+  align = 'right',
   minWidth = 100,
 }: DropdownProps) {
   const [isOpen, setIsOpen] = useState(false);
@@ -22,16 +22,13 @@ export function Dropdown({
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      if (
-        dropdownRef.current &&
-        !dropdownRef.current.contains(event.target as Node)
-      ) {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
         setIsOpen(false);
       }
     };
 
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
   const [trigger, menu] = children;
@@ -43,7 +40,7 @@ export function Dropdown({
         <div
           className={`absolute top-full mt-1 z-10 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-md shadow-lg`}
           style={{
-            [align === "right" ? "right" : "left"]: 0,
+            [align === 'right' ? 'right' : 'left']: 0,
             minWidth: `${minWidth}px`,
           }}
         >
@@ -59,16 +56,9 @@ interface DropdownTriggerProps {
   className?: string;
 }
 
-export function DropdownTrigger({
-  children,
-  className = "",
-}: DropdownTriggerProps) {
+export function DropdownTrigger({ children, className = '' }: DropdownTriggerProps) {
   return (
-    <Button
-      variant="outline"
-      size="sm"
-      className={`justify-between ${className}`}
-    >
+    <Button variant="outline" size="sm" className={`justify-between ${className}`}>
       {children}
       <ChevronDown className="ml-2 h-4 w-4" />
     </Button>
@@ -89,11 +79,7 @@ interface DropdownMenuItemProps {
   className?: string;
 }
 
-export function DropdownMenuItem({
-  children,
-  onClick,
-  className = "",
-}: DropdownMenuItemProps) {
+export function DropdownMenuItem({ children, onClick, className = '' }: DropdownMenuItemProps) {
   return (
     <button
       className={`w-full px-3 py-2 text-left hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors ${className}`}

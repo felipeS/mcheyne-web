@@ -1,10 +1,10 @@
-import { RAW_PLAN_DATA } from "@/lib/planConstants";
-import { getTranslations } from "next-intl/server";
-import { PlanProvider } from "@/context/PlanProvider";
-import { ReadingSelection } from "@/components/reading-selection";
-import { DateNavigation } from "@/components/date-navigation";
-import { SettingsDialog } from "@/components/settings-dialog";
-import { ProgressTracker } from "@/components/progress-tracker";
+import { RAW_PLAN_DATA } from '@/lib/planConstants';
+import { getTranslations } from 'next-intl/server';
+import { PlanProvider } from '@/context/PlanProvider';
+import { ReadingSelection } from '@/components/reading-selection';
+import { DateNavigation } from '@/components/date-navigation';
+import { SettingsDialog } from '@/components/settings-dialog';
+import { ProgressTracker } from '@/components/progress-tracker';
 
 // This will statically generate a page for each day of the plan
 export function generateStaticParams() {
@@ -24,15 +24,15 @@ export async function generateMetadata({
 
   // Safe fallback if id is out of bounds
   if (!passages) {
-    return { title: "Day Not Found" };
+    return { title: 'Day Not Found' };
   }
 
-  const t = await getTranslations({ locale, namespace: "app" });
+  const t = await getTranslations({ locale, namespace: 'app' });
 
-  const passagesString = passages.join(", ");
+  const passagesString = passages.join(', ');
 
   return {
-    title: `Day ${id}: ${passagesString} | ${t("title")}`,
+    title: `Day ${id}: ${passagesString} | ${t('title')}`,
     description: `Read ${passagesString} for Day ${id} of the M'Cheyne Reading Plan.`,
     openGraph: {
       title: `Day ${id}: ${passagesString} | M'Cheyne Reading Plan`,
@@ -41,7 +41,7 @@ export async function generateMetadata({
     twitter: {
       title: `Day ${id}: ${passagesString} | M'Cheyne Reading Plan`,
       description: `Read ${passagesString} for Day ${id} of the M'Cheyne Reading Plan.`,
-    }
+    },
   };
 }
 

@@ -1,0 +1,17 @@
+node_modules
+.next
+coverage
+out
+build
+dist
+public/sw.js
+public/workbox-*.js
+public/worker-*.js
+*.log
+.env*
+.DS_Store
+package-lock.json
+pnpm-lock.yaml
+yarn.lock
+AGENTS.md
+WARP.md

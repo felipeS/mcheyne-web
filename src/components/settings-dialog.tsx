@@ -1,33 +1,28 @@
-"use client";
+'use client';
 
-import { usePlan } from "@/context/PlanProvider";
+import { usePlan } from '@/context/PlanProvider';
 import {
   Dialog,
   DialogContent,
   DialogFooter,
   DialogHeader,
   DialogTitle,
-} from "@/components/ui/dialog";
-import { Button } from "@/components/ui/button";
-import { Switch } from "@/components/ui/switch";
-import { Label } from "@/components/ui/label";
-import { Input } from "@/components/ui/input";
-import { useTranslations, useLocale } from "next-intl";
-import { useState } from "react";
-import { useRouter } from "next/navigation";
-import { ThemeToggle } from "./theme-toggle";
-import { useSettings } from "@/context/SettingsContext";
-import { formatDateInput } from "@/lib/dateUtils";
-import { locales, type Locale } from "@/lib/i18n";
-import {
-  Dropdown,
-  DropdownTrigger,
-  DropdownMenu,
-  DropdownMenuItem,
-} from "./ui/dropdown";
+} from '@/components/ui/dialog';
+import { Button } from '@/components/ui/button';
+import { Switch } from '@/components/ui/switch';
+import { Label } from '@/components/ui/label';
+import { Input } from '@/components/ui/input';
+import { useTranslations, useLocale } from 'next-intl';
+import { useState } from 'react';
+import { useRouter } from 'next/navigation';
+import { ThemeToggle } from './theme-toggle';
+import { useSettings } from '@/context/SettingsContext';
+import { formatDateInput } from '@/lib/dateUtils';
+import { locales, type Locale } from '@/lib/i18n';
+import { Dropdown, DropdownTrigger, DropdownMenu, DropdownMenuItem } from './ui/dropdown';
 
 export function SettingsDialog() {
-  const t = useTranslations("settings");
+  const t = useTranslations('settings');
   const { isSelfPaced, setSelfPaced, startDate, changeStartDate } = usePlan();
   const { isOpen, closeSettings } = useSettings();
   const [confirmReset, setConfirmReset] = useState(false);
@@ -35,9 +30,9 @@ export function SettingsDialog() {
   const currentLocale = useLocale();
 
   const localeLabelMap: Record<Locale, string> = {
-    en: t("english"),
-    es: t("spanish"),
-    de: t("german"),
+    en: t('english'),
+    es: t('spanish'),
+    de: t('german'),
   };
 
   const handleLanguageChange = (newLocale: string) => {
@@ -53,15 +48,15 @@ export function SettingsDialog() {
       <Dialog open={isOpen} onOpenChange={closeSettings}>
         <DialogContent>
           <DialogHeader>
-            <DialogTitle>{t("title")}</DialogTitle>
+            <DialogTitle>{t('title')}</DialogTitle>
           </DialogHeader>
           <div className="space-y-4">
             <div className="flex items-center justify-between">
-              <div className="text-md font-normal">{t("theme")}</div>
+              <div className="text-md font-normal">{t('theme')}</div>
               <ThemeToggle />
             </div>
             <div className="flex items-center justify-between">
-              <div className="text-md font-normal">{t("language")}</div>
+              <div className="text-md font-normal">{t('language')}</div>
               <Dropdown minWidth={100}>
                 <DropdownTrigger className="min-w-[100px]">
                   {localeLabelMap[currentLocale as Locale] ?? currentLocale}
@@ -73,10 +68,10 @@ export function SettingsDialog() {
                       onClick={() => handleLanguageChange(locale)}
                       className={
                         index === 0
-                          ? "first:rounded-t-md"
+                          ? 'first:rounded-t-md'
                           : index === locales.length - 1
-                          ? "last:rounded-b-md"
-                          : ""
+                            ? 'last:rounded-b-md'
+                            : ''
                       }
                     >
                       {localeLabelMap[locale]}
@@ -86,13 +81,13 @@ export function SettingsDialog() {
               </Dropdown>
             </div>
             <div className="flex items-center justify-between">
-              <div className="text-md font-normal">{t("selfPaced")}</div>
+              <div className="text-md font-normal">{t('selfPaced')}</div>
               <Switch checked={isSelfPaced} onCheckedChange={setSelfPaced} />
             </div>
             {!isSelfPaced && (
               <div className="flex items-center justify-between gap-4">
                 <Label className="text-md font-normal" htmlFor="startDate">
-                  {t("startDate")}
+                  {t('startDate')}
                 </Label>
                 <Input
                   id="startDate"
@@ -105,23 +100,15 @@ export function SettingsDialog() {
             )}
             <div className=" pt-2">
               {!confirmReset ? (
-                <Button
-                  variant="destructive"
-                  onClick={() => setConfirmReset(true)}
-                >
-                  {t("reset")}
+                <Button variant="destructive" onClick={() => setConfirmReset(true)}>
+                  {t('reset')}
                 </Button>
               ) : (
                 <div className="flex items-center justify-between gap-2">
-                  <div className="text-sm text-muted-foreground">
-                    {t("resetConfirm")}
-                  </div>
+                  <div className="text-sm text-muted-foreground">{t('resetConfirm')}</div>
                   <div className="flex gap-2">
-                    <Button
-                      variant="outline"
-                      onClick={() => setConfirmReset(false)}
-                    >
-                      {t("cancel")}
+                    <Button variant="outline" onClick={() => setConfirmReset(false)}>
+                      {t('cancel')}
                     </Button>
                     <Button
                       variant="destructive"
@@ -130,7 +117,7 @@ export function SettingsDialog() {
                         setConfirmReset(false);
                       }}
                     >
-                      {t("reset")}
+                      {t('reset')}
                     </Button>
                   </div>
                 </div>
@@ -138,7 +125,7 @@ export function SettingsDialog() {
             </div>
           </div>
           <DialogFooter>
-            <Button onClick={closeSettings}>{t("close")}</Button>
+            <Button onClick={closeSettings}>{t('close')}</Button>
           </DialogFooter>
         </DialogContent>
       </Dialog>
