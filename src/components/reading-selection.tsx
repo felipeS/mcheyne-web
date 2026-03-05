@@ -1,17 +1,17 @@
-"use client";
+'use client';
 
-import { usePlan } from "@/context/PlanProvider";
-import { Card, CardContent } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { useTranslations } from "next-intl";
-import { splitPassage } from "@/lib/planConstants";
-import { useWebHaptics } from "web-haptics/react";
+import { usePlan } from '@/context/PlanProvider';
+import { Card, CardContent } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { useTranslations } from 'next-intl';
+import { splitPassage } from '@/lib/planConstants';
+import { useWebHaptics } from 'web-haptics/react';
 
 export function ReadingSelection() {
   const { getSelection, hasRead, toggleRead, selectedIndex } = usePlan();
   const selection = getSelection(selectedIndex);
   const haptic = useWebHaptics();
-  const t = useTranslations("books");
+  const t = useTranslations('books');
 
   if (selection?.isLeap) {
     return (
@@ -19,9 +19,7 @@ export function ReadingSelection() {
         <CardContent>
           <div className="flex items-center gap-2">
             <span>🤸</span>
-            <span className="font-medium">
-              {t("leap", { defaultMessage: "Happy Leap Year!" })}
-            </span>
+            <span className="font-medium">{t('leap', { defaultMessage: 'Happy Leap Year!' })}</span>
           </div>
         </CardContent>
       </Card>
@@ -39,7 +37,7 @@ export function ReadingSelection() {
       {selection.passages.map((desc, id) => {
         const { book, chapter } = splitPassage(desc);
         const localizedBook = translateDynamic(book, { defaultMessage: book });
-        const label = `${localizedBook}${chapter ? " " + chapter : ""}`;
+        const label = `${localizedBook}${chapter ? ' ' + chapter : ''}`;
         const read = hasRead(desc, id);
 
         const handleClick = () => {
@@ -72,11 +70,11 @@ export function ReadingSelection() {
           <Button
             key={id}
             onClick={handleClick}
-            variant={read ? "secondary" : "default"}
+            variant={read ? 'secondary' : 'default'}
             className="justify-start h-16 rounded-full bg-accent text-accent-foreground hover:bg-accent/80"
           >
             <div className="flex items-center gap-3">
-              <div className="text-xl">{read ? "◉" : "○"}</div>
+              <div className="text-xl">{read ? '◉' : '○'}</div>
               <div className="text-base font-medium">{label}</div>
             </div>
           </Button>

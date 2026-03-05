@@ -1,11 +1,11 @@
-"use client";
+'use client';
 
-import { NextIntlClientProvider } from "next-intl";
-import { ServiceWorkerUpdater } from "./ServiceWorkerUpdater";
-import { Analytics } from "@vercel/analytics/react";
-import { Header } from "./header";
-import { SettingsProvider, useSettings } from "@/context/SettingsContext";
-import { PostHogProvider } from "./PostHogProvider";
+import { NextIntlClientProvider } from 'next-intl';
+import { ServiceWorkerUpdater } from './ServiceWorkerUpdater';
+import { Analytics } from '@vercel/analytics/react';
+import { Header } from './header';
+import { SettingsProvider, useSettings } from '@/context/SettingsContext';
+import { PostHogProvider } from './PostHogProvider';
 
 function HeaderWithSettings() {
   const { openSettings } = useSettings();
@@ -28,9 +28,7 @@ export function ClientProviders({
           <ServiceWorkerUpdater />
           <div className="mx-auto max-w-screen-sm p-4 flex flex-col items-center gap-8">
             <HeaderWithSettings />
-            <main className="w-full flex flex-col items-center gap-8">
-              {children}
-            </main>
+            <main className="w-full flex flex-col items-center gap-8">{children}</main>
           </div>
           <Analytics />
         </SettingsProvider>

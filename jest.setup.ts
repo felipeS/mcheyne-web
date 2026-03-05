@@ -1,5 +1,5 @@
-import "whatwg-fetch";
-import "@testing-library/jest-dom";
+import 'whatwg-fetch';
+import '@testing-library/jest-dom';
 
 // Extend Jest matchers
 declare global {
@@ -11,7 +11,7 @@ declare global {
 }
 
 // Mock Next.js router
-jest.mock("next/navigation", () => ({
+jest.mock('next/navigation', () => ({
   useRouter() {
     return {
       push: jest.fn(),
@@ -50,7 +50,7 @@ const localStorageMock = (() => {
 global.localStorage = localStorageMock;
 
 // Mock matchMedia
-Object.defineProperty(window, "matchMedia", {
+Object.defineProperty(window, 'matchMedia', {
   writable: true,
   value: jest.fn().mockImplementation((query) => ({
     matches: false,
