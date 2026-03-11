@@ -3,6 +3,7 @@
 import { BookOpen, Settings } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { Button } from '@/components/ui/button';
+import { AuthButton } from './auth-button';
 
 export function Header({ onSettingsClick }: { onSettingsClick: () => void }) {
   const t = useTranslations('app');
@@ -16,9 +17,12 @@ export function Header({ onSettingsClick }: { onSettingsClick: () => void }) {
           <div className="text-sm font-semibold text-muted-foreground">{t('subtitle')}</div>
         </div>
       </div>
-      <Button variant="outline" size="icon" onClick={onSettingsClick}>
-        <Settings className="h-4 w-4" />
-      </Button>
+      <div className="flex items-center gap-2">
+        <AuthButton />
+        <Button variant="outline" size="icon" onClick={onSettingsClick}>
+          <Settings className="h-4 w-4" />
+        </Button>
+      </div>
     </div>
   );
 }
