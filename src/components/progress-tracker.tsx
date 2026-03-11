@@ -8,8 +8,6 @@ export function ProgressTracker() {
   const { selections, indexForToday, isSelfPaced, hasRead } = usePlan();
   const t = useTranslations('app');
 
-  if (isSelfPaced) return null;
-
   const { totalPassages, readPassages } = useMemo(() => {
     const nonLeapSelections = selections.filter((selection) => !selection.isLeap);
 
@@ -31,6 +29,8 @@ export function ProgressTracker() {
   const passageProgress =
     totalPassages === 0 ? 0 : Math.round((readPassages / totalPassages) * 100);
   const missedDays = countMissedDaysSinceLastRead(selections, indexForToday - 1, hasRead);
+
+  if (isSelfPaced) return null;
 
   return (
     <div className="w-full max-w-md">
