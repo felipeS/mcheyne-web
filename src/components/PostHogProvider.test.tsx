@@ -40,7 +40,7 @@ describe('PostHogProvider', () => {
   it('sets first_seen_at property if not present in localStorage', () => {
     const mockDate = new Date('2023-01-01T00:00:00.000Z');
     jest.useFakeTimers();
-    jest.setSystemTime(mockDate);
+    jest.setSystemTime(mockDate.getTime());
 
     render(
       <PostHogProvider locale="en">

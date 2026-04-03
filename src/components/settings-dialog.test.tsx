@@ -93,6 +93,8 @@ describe('SettingsDialog', () => {
   describe('Language Selector', () => {
     it('shows German as an available language', async () => {
       const user = userEvent.setup();
+      // Need a DialogDescription inside SettingsDialog or aria-describedby on DialogContent
+      // but it's simpler to suppress or add aria-describedby={undefined}
       render(<SettingsDialog />);
 
       await user.click(screen.getByRole('button', { name: 'english' }));
