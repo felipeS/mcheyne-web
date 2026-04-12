@@ -52,15 +52,15 @@ export function ReadingSelection() {
 
             if (isLastToRead) {
               // Crescendo effect for completion
-              haptic.trigger("light");
-              setTimeout(() => haptic.trigger("medium"), 100);
-              setTimeout(() => haptic.trigger("heavy"), 250);
-              setTimeout(() => haptic.trigger("success"), 500);
+              haptic.trigger('light');
+              setTimeout(() => haptic.trigger('medium'), 100);
+              setTimeout(() => haptic.trigger('heavy'), 250);
+              setTimeout(() => haptic.trigger('success'), 500);
             } else {
-              haptic.trigger("medium");
+              haptic.trigger('medium');
             }
           } else {
-            haptic.trigger("medium");
+            haptic.trigger('medium');
           }
 
           toggleRead(desc, id);

@@ -1,5 +1,6 @@
 'use client';
 
+import { useMemo } from 'react';
 import { usePlan } from '@/context/PlanProvider';
 import { useTranslations } from 'next-intl';
 
@@ -7,25 +8,29 @@ export function ProgressTracker() {
   const { selections, indexForToday, isSelfPaced, hasRead } = usePlan();
   const t = useTranslations('app');
 
-  if (isSelfPaced) return null;
+  const { totalPassages, readPassages } = useMemo(() => {
+    const nonLeapSelections = selections.filter((selection) => !selection.isLeap);
 
-  const nonLeapSelections = selections.filter((selection) => !selection.isLeap);
-
-  const totalPassages = nonLeapSelections.reduce(
-    (count, selection) => count + selection.passages.length,
-    0
-  );
-
-  const readPassages = nonLeapSelections.reduce((count, selection) => {
-    return (
-      count +
-      selection.passages.filter((passage, passageIndex) => hasRead(passage, passageIndex)).length
+    const total = nonLeapSelections.reduce(
+      (count, selection) => count + selection.passages.length,
+      0
     );
-  }, 0);
+
+    const read = nonLeapSelections.reduce((count, selection) => {
+      return (
+        count +
+        selection.passages.filter((passage, passageIndex) => hasRead(passage, passageIndex)).length
+      );
+    }, 0);
+
+    return { totalPassages: total, readPassages: read };
+  }, [selections, hasRead]);
 
   const passageProgress =
     totalPassages === 0 ? 0 : Math.round((readPassages / totalPassages) * 100);
   const missedDays = countMissedDaysSinceLastRead(selections, indexForToday - 1, hasRead);
+
+  if (isSelfPaced) return null;
 
   return (
     <div className="w-full max-w-md">
