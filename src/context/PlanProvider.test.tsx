@@ -12,6 +12,23 @@ function TestComponent() {
   );
 }
 
+jest.mock('@/lib/supabase/client', () => ({
+  createClient: () => ({
+    auth: {
+      getSession: jest.fn().mockResolvedValue({ data: { session: null } }),
+      onAuthStateChange: jest.fn().mockReturnValue({ data: { subscription: { unsubscribe: jest.fn() } } }),
+    },
+    from: jest.fn().mockReturnValue({
+      select: jest.fn().mockReturnValue({
+        eq: jest.fn().mockReturnValue({
+          single: jest.fn().mockResolvedValue({ data: null, error: { code: 'PGRST116' } })
+        })
+      }),
+      upsert: jest.fn().mockResolvedValue({}),
+    })
+  })
+}));
+
 describe('PlanProvider Hydration', () => {
   beforeEach(() => {
     localStorage.clear();
