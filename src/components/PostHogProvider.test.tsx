@@ -16,10 +16,16 @@ jest.mock('posthog-js/react', () => ({
 
 describe('PostHogProvider', () => {
   const originalLang = document.documentElement.lang;
+  const originalDisableLocalOptOut = process.env.NEXT_PUBLIC_POSTHOG_DISABLE_LOCAL_OPT_OUT;
+  const mockPhClient = {
+    opt_out_capturing: jest.fn(),
+    opt_in_capturing: jest.fn(),
+  };
 
   beforeEach(() => {
     jest.clearAllMocks();
     localStorage.clear();
+    delete process.env.NEXT_PUBLIC_POSTHOG_DISABLE_LOCAL_OPT_OUT;
     // Mock document.documentElement.lang
     Object.defineProperty(document.documentElement, 'lang', {
       value: 'en',
@@ -34,8 +40,19 @@ describe('PostHogProvider', () => {
       configurable: true,
       writable: true,
     });
+    if (originalDisableLocalOptOut === undefined) {
+      delete process.env.NEXT_PUBLIC_POSTHOG_DISABLE_LOCAL_OPT_OUT;
+    } else {
+      process.env.NEXT_PUBLIC_POSTHOG_DISABLE_LOCAL_OPT_OUT = originalDisableLocalOptOut;
+    }
     jest.useRealTimers();
   });
+
+  function getLoadedCallback() {
+    const initMock = posthog.init as jest.Mock;
+    const initConfig = initMock.mock.calls[0]?.[1];
+    return initConfig?.loaded as ((ph: typeof mockPhClient) => void) | undefined;
+  }
 
   it('sets first_seen_at property if not present in localStorage', () => {
     const mockDate = new Date('2023-01-01T00:00:00.000Z');
@@ -130,5 +147,34 @@ describe('PostHogProvider', () => {
     expect(posthog.setPersonProperties).toHaveBeenCalledWith({
       language: 'de',
     });
+  });
+
+  it('opts out of PostHog on localhost by default', () => {
+    render(
+      <PostHogProvider locale="en">
+        <div>Test Child</div>
+      </PostHogProvider>
+    );
+
+    const loaded = getLoadedCallback();
+    loaded?.(mockPhClient);
+
+    expect(mockPhClient.opt_out_capturing).toHaveBeenCalled();
+  });
+
+  it('keeps PostHog enabled locally when local opt-out is disabled via env var', () => {
+    process.env.NEXT_PUBLIC_POSTHOG_DISABLE_LOCAL_OPT_OUT = 'true';
+
+    render(
+      <PostHogProvider locale="en">
+        <div>Test Child</div>
+      </PostHogProvider>
+    );
+
+    const loaded = getLoadedCallback();
+    loaded?.(mockPhClient);
+
+    expect(mockPhClient.opt_out_capturing).not.toHaveBeenCalled();
+    expect(mockPhClient.opt_in_capturing).toHaveBeenCalled();
   });
 });
