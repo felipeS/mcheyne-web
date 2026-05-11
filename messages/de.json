@@ -39,6 +39,24 @@
     "cancel": "Abbrechen",
     "close": "Schließen"
   },
+  "feedbackSurvey": {
+    "trigger": "Feedback",
+    "loading": "Feedback-Formular wird geladen...",
+    "title": "Produktfeedback",
+    "description": "Teile Ideen, Fehler oder fehlende Funktionen mit uns.",
+    "categoryQuestion": "Was möchtest du mitteilen?",
+    "detailsQuestion": "Erzähl uns mehr",
+    "detailsDescription": "Beschreibe deinen Vorschlag oder dein Problem mit so vielen Details, wie du möchtest.",
+    "placeholder": "Schreib hier los...",
+    "submit": "Senden",
+    "thankYouTitle": "Danke für dein Feedback!",
+    "thankYouDescription": "Deine Antwort wurde gespeichert.",
+    "choices": {
+      "suggestFeature": "Neue Funktion vorschlagen",
+      "reportBroken": "Einen Fehler melden",
+      "missing": "Etwas fehlt"
+    }
+  },
   "onboarding": {
     "title": "Willkommen",
     "intro": "Der tägliche Bibelleseplan von Robert Murray M'Cheyne führt Leserinnen und Leser einmal durch das Alte Testament und zweimal pro Jahr durch das Neue Testament und die Psalmen.",

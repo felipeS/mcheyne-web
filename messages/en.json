@@ -39,6 +39,24 @@
     "close": "Close",
     "german": "German"
   },
+  "feedbackSurvey": {
+    "trigger": "Feedback",
+    "loading": "Loading feedback form...",
+    "title": "Product feedback",
+    "description": "Share ideas, bugs, or missing functionality.",
+    "categoryQuestion": "What would you like to share?",
+    "detailsQuestion": "Tell us more",
+    "detailsDescription": "Please describe your suggestion or issue in as much detail as you'd like.",
+    "placeholder": "Start typing...",
+    "submit": "Submit",
+    "thankYouTitle": "Thank you for your feedback!",
+    "thankYouDescription": "Your response has been recorded.",
+    "choices": {
+      "suggestFeature": "Suggest a new feature",
+      "reportBroken": "Report something broken",
+      "missing": "Something is missing"
+    }
+  },
   "onboarding": {
     "title": "Welcome",
     "intro": "Robert Murray M'Cheyne's daily Bible reading plan guides readers through the Old Testament once and the New Testament and Psalms twice per year.",
