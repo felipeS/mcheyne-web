@@ -99,7 +99,7 @@ export function PlanProvider({
     if (!hydrated) return 0;
     if (isSelfPaced) {
       const idx = selections.findIndex((sel) =>
-        sel.isLeap ? false : sel.passages.every((p, i) => passages[v2Key(p, i)])
+        sel.isLeap ? false : !sel.passages.every((p, i) => passages[v2Key(p, i)])
       );
       return idx === -1 ? 0 : idx;
     } else {

@@ -46,7 +46,7 @@ export function SettingsDialog() {
   return (
     <div className="w-full max-w-md flex justify-end">
       <Dialog open={isOpen} onOpenChange={closeSettings}>
-        <DialogContent>
+        <DialogContent aria-describedby={undefined}>
           <DialogHeader>
             <DialogTitle>{t('title')}</DialogTitle>
           </DialogHeader>

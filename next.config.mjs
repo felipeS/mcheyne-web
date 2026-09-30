@@ -6,7 +6,14 @@ const withNextIntl = createNextIntlPlugin('./src/i18n.ts');
 const withPWA = withPWAInit({
   dest: 'public',
   register: false,
-  skipWaiting: false,
+  // ServiceWorkerUpdater warms the document cache with handled failures. The
+  // library's dynamic start-URL helper fires unhandled fetches on history changes.
+  cacheStartUrl: false,
+  dynamicStartUrl: false,
+  cacheOnFrontEndNav: false,
+  reloadOnOnline: false,
+  fallbacks: { document: '/offline.html' },
+  workboxOptions: { skipWaiting: false },
   disable: process.env.NODE_ENV === 'development',
 });
 

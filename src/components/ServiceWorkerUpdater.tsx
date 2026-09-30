@@ -2,29 +2,76 @@
 
 import { useEffect, useState } from 'react';
 import { Workbox } from 'workbox-window';
+import { usePathname } from 'next/navigation';
 import { Button } from '@/components/ui/button';
+import { cacheCurrentDocument, reportPwaError } from '@/lib/pwa';
 
 export function ServiceWorkerUpdater() {
   const [showReload, setShowReload] = useState(false);
   const [wb, setWb] = useState<Workbox | null>(null);
+  const pathname = usePathname();
 
   useEffect(() => {
-    if (typeof window !== 'undefined' && 'serviceWorker' in navigator) {
+    if (process.env.NODE_ENV !== 'development' && 'serviceWorker' in navigator) {
       const wbInstance = new Workbox('/sw.js');
       setWb(wbInstance);
+      let disposed = false;
+      let registering = false;
+      let registered = false;
 
       const showSkipWaitingPrompt = () => {
         setShowReload(true);
       };
 
-      // Add event listeners to handle any of these events.
       wbInstance.addEventListener('waiting', showSkipWaitingPrompt);
-      // @ts-expect-error - externalwaiting is a valid event but TS definitions might be incomplete
-      wbInstance.addEventListener('externalwaiting', showSkipWaitingPrompt);
 
-      wbInstance.register();
+      const register = async () => {
+        if (disposed || registering || registered || !navigator.onLine) return;
+        registering = true;
+        try {
+          await wbInstance.register();
+          registered = true;
+        } catch (error) {
+          if (!disposed) reportPwaError(error, 'pwa.register_service_worker');
+        } finally {
+          registering = false;
+        }
+      };
+
+      void register();
+      window.addEventListener('online', register);
+      return () => {
+        disposed = true;
+        wbInstance.removeEventListener('waiting', showSkipWaitingPrompt);
+        window.removeEventListener('online', register);
+      };
     }
   }, []);
+
+  useEffect(() => {
+    if (process.env.NODE_ENV === 'development' || !('serviceWorker' in navigator)) return;
+
+    const controller = new AbortController();
+    let caching = false;
+    const cacheDocument = async () => {
+      if (caching || controller.signal.aborted) return;
+      caching = true;
+      try {
+        await cacheCurrentDocument(controller.signal);
+      } catch (error) {
+        if (!controller.signal.aborted) reportPwaError(error, 'pwa.cache_document');
+      } finally {
+        caching = false;
+      }
+    };
+
+    void cacheDocument();
+    window.addEventListener('online', cacheDocument);
+    return () => {
+      controller.abort();
+      window.removeEventListener('online', cacheDocument);
+    };
+  }, [pathname]);
 
   const reloadPage = () => {
     if (wb) {

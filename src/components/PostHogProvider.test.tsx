@@ -1,6 +1,6 @@
 import { render } from '@testing-library/react';
 import { PostHogProvider } from './PostHogProvider';
-import posthog from 'posthog-js';
+import posthog, { type CaptureResult } from 'posthog-js';
 import React from 'react';
 
 // Mock posthog-js
@@ -130,5 +130,32 @@ describe('PostHogProvider', () => {
     expect(posthog.setPersonProperties).toHaveBeenCalledWith({
       language: 'de',
     });
+  });
+
+  it.each([
+    ['TypeError', 'NetworkError when attempting to fetch resource.'],
+    ['NS_BINDING_ABORTED', ''],
+    ['ReferenceError', 'readingPlan is not defined'],
+  ])('preserves %s exceptions and attaches diagnostic context', (type, value) => {
+    render(<PostHogProvider locale="en">Test</PostHogProvider>);
+    const beforeSend = jest.mocked(posthog.init).mock.calls[0][1]?.before_send;
+    if (typeof beforeSend !== 'function') throw new Error('Missing before_send callback');
+    const event = {
+      event: '$exception',
+      properties: { $exception_list: [{ type, value }], error_operation: 'pwa.cache_document' },
+    } as unknown as CaptureResult;
+
+    expect(beforeSend(event)).toMatchObject({
+      event: '$exception',
+      properties: {
+        $exception_list: [{ type, value }],
+        error_operation: 'pwa.cache_document',
+        network_online: expect.any(Boolean),
+        service_worker_controlled: false,
+      },
+    });
+    const pageview = { event: '$pageview', properties: {} } as unknown as CaptureResult;
+    expect(beforeSend(pageview)).toBe(pageview);
+    expect(pageview.properties).toEqual({});
   });
 });
