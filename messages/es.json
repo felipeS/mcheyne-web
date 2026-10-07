@@ -39,6 +39,24 @@
     "close": "Cerrar",
     "german": "Alemán"
   },
+  "feedbackSurvey": {
+    "trigger": "Comentarios",
+    "loading": "Cargando formulario de comentarios...",
+    "title": "Comentarios del producto",
+    "description": "Comparte ideas, errores o funciones que faltan.",
+    "categoryQuestion": "¿Qué te gustaría compartir?",
+    "detailsQuestion": "Cuéntanos más",
+    "detailsDescription": "Describe tu sugerencia o problema con todo el detalle que quieras.",
+    "placeholder": "Empieza a escribir...",
+    "submit": "Enviar",
+    "thankYouTitle": "¡Gracias por tus comentarios!",
+    "thankYouDescription": "Tu respuesta ha sido registrada.",
+    "choices": {
+      "suggestFeature": "Sugerir una nueva función",
+      "reportBroken": "Reportar algo roto",
+      "missing": "Falta algo"
+    }
+  },
   "onboarding": {
     "title": "Bienvenido",
     "intro": "El plan de lectura bíblica diaria de Robert Murray M'Cheyne guía a los lectores a través del Antiguo Testamento una vez y del Nuevo Testamento y los Salmos dos veces al año.",

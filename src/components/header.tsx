@@ -4,8 +4,15 @@ import { BookOpen, Settings } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { Button } from '@/components/ui/button';
 
-export function Header({ onSettingsClick }: { onSettingsClick: () => void }) {
+export function Header({
+  onSettingsClick,
+  feedbackAction,
+}: {
+  onSettingsClick: () => void;
+  feedbackAction?: React.ReactNode;
+}) {
   const t = useTranslations('app');
+  const settingsT = useTranslations('settings');
 
   return (
     <div className="flex items-center justify-between w-full max-w-md">
@@ -16,9 +23,17 @@ export function Header({ onSettingsClick }: { onSettingsClick: () => void }) {
           <div className="text-sm font-semibold text-muted-foreground">{t('subtitle')}</div>
         </div>
       </div>
-      <Button variant="outline" size="icon" onClick={onSettingsClick}>
-        <Settings className="h-4 w-4" />
-      </Button>
+      <div className="flex items-center gap-2">
+        {feedbackAction}
+        <Button
+          variant="outline"
+          size="icon"
+          onClick={onSettingsClick}
+          aria-label={settingsT('open')}
+        >
+          <Settings className="h-4 w-4" />
+        </Button>
+      </div>
     </div>
   );
 }

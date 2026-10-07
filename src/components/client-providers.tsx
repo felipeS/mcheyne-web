@@ -6,10 +6,11 @@ import { Analytics } from '@vercel/analytics/react';
 import { Header } from './header';
 import { SettingsProvider, useSettings } from '@/context/SettingsContext';
 import { PostHogProvider } from './PostHogProvider';
+import { FeedbackSurvey } from './feedback-survey';
 
 function HeaderWithSettings() {
   const { openSettings } = useSettings();
-  return <Header onSettingsClick={openSettings} />;
+  return <Header onSettingsClick={openSettings} feedbackAction={<FeedbackSurvey />} />;
 }
 
 function FooterQuote() {
