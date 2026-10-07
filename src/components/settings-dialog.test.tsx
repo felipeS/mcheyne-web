@@ -132,7 +132,7 @@ describe('SettingsDialog', () => {
       const resetButton = screen.getByRole('button', { name: 'reset' });
       await user.click(resetButton);
 
-      const confirmDialog = screen.getByText('resetConfirm').parentElement;
+      const confirmDialog = screen.getByText('resetConfirm').parentElement!;
       const confirmButton = within(confirmDialog).getByRole('button', {
         name: 'reset',
       });
@@ -148,7 +148,7 @@ describe('SettingsDialog', () => {
       const resetButton = screen.getByRole('button', { name: 'reset' });
       await user.click(resetButton);
 
-      const confirmDialog = screen.getByText('resetConfirm').parentElement;
+      const confirmDialog = screen.getByText('resetConfirm').parentElement!;
       const cancelButton = within(confirmDialog).getByRole('button', {
         name: 'cancel',
       });

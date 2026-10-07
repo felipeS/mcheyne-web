@@ -13,7 +13,11 @@ export function ReadingSelection() {
   const haptic = useWebHaptics();
   const t = useTranslations('books');
 
-  if (selection?.isLeap) {
+  if (!selection) {
+    return null;
+  }
+
+  if (selection.isLeap) {
     return (
       <Card className="w-full max-w-md">
         <CardContent>

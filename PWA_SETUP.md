@@ -77,6 +77,31 @@ The `safari-pinned-tab.svg` file has already been created in `public/icons/`.
 - Users can access the app even without internet
 - Offline page is shown for navigation requests
 
+`ServiceWorkerUpdater` caches the current HTML document on the first visit and on
+reconnection. Failed cache refreshes and registrations are handled and reported to
+PostHog with an `error_operation` name. Reconnecting does not reload the current
+page. Next.js HTML and RSC responses retain separate runtime caches.
+
+Uncached document navigations fall back to `/offline.html`; this fallback is never
+stored over a working page. Reading progress remains in localStorage.
+
+To verify a production build in Firefox:
+
+1. Open `/` online and wait for the service worker to activate.
+2. Disconnect the network, reload, mark a passage, and reload again. The page and
+   saved progress should still be available.
+3. Navigate directly to an unvisited locale, such as `/de`. Expect the offline
+   fallback, then reconnect and use **Try Again** to load it.
+4. Reconnect while on the reading page. Its current state should remain without an
+   automatic reload. If browser offline emulation still allows service-worker
+   requests, stop the local server to simulate a real connection failure.
+
+All exception reports retain error tracking and now include `network_online`,
+`service_worker_controlled`, `service_worker_script`, `pwa_display_mode`, and
+`error_operation`. The online flag is a hint, not proof of server reachability;
+automatic errors without a known operation use `unattributed`. No error signatures
+are globally suppressed.
+
 ### Install Prompt
 
 - Automatic install prompt appears when criteria are met

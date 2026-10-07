@@ -3,6 +3,7 @@
 import posthog from 'posthog-js';
 import { PostHogProvider as PHProvider } from 'posthog-js/react';
 import { useEffect } from 'react';
+import { getPwaErrorContext } from '@/lib/pwa';
 
 function isLocalLikeHost(hostname: string) {
   return (
@@ -33,6 +34,16 @@ export function PostHogProvider({
       ui_host: 'https://eu.posthog.com',
       defaults: '2025-05-24',
       capture_exceptions: true,
+      before_send: (event) => {
+        if (event?.event === '$exception') {
+          event.properties = {
+            ...getPwaErrorContext(),
+            error_operation: 'unattributed',
+            ...event.properties,
+          };
+        }
+        return event;
+      },
       debug: process.env.NODE_ENV === 'development',
       loaded: (ph) => {
         const { hostname } = window.location;
