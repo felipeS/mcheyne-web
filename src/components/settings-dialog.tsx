@@ -14,7 +14,6 @@ import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
 import { useTranslations, useLocale } from 'next-intl';
 import { useState } from 'react';
-import { useRouter } from 'next/navigation';
 import { ThemeToggle } from './theme-toggle';
 import { useSettings } from '@/context/SettingsContext';
 import { formatDateInput } from '@/lib/dateUtils';
@@ -26,7 +25,6 @@ export function SettingsDialog() {
   const { isSelfPaced, setSelfPaced, startDate, changeStartDate } = usePlan();
   const { isOpen, closeSettings } = useSettings();
   const [confirmReset, setConfirmReset] = useState(false);
-  const router = useRouter();
   const currentLocale = useLocale();
 
   const localeLabelMap: Record<Locale, string> = {
@@ -39,7 +37,7 @@ export function SettingsDialog() {
     if (newLocale !== currentLocale) {
       // Set the locale cookie and redirect
       document.cookie = `NEXT_LOCALE=${newLocale}; path=/; max-age=31536000`;
-      router.push(`/${newLocale}`);
+      window.location.href = `/${newLocale}`;
     }
   };
 
