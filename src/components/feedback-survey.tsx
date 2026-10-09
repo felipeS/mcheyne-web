@@ -79,7 +79,7 @@ export function FeedbackSurvey() {
       }
 
       posthog.getActiveMatchingSurveys((surveys) => {
-        const matchingSurvey = surveys.find(isFeedbackSurvey) ?? null;
+        const matchingSurvey = surveys.find(isFeedbackSurvey) as FeedbackSurveyConfig | undefined ?? null;
         setSurvey(matchingSurvey);
       }, forceReload);
     },
