@@ -30,7 +30,7 @@ type SurveyQuestion = {
 type FeedbackSurveyConfig = {
   id: string;
   name: string;
-  description: string;
+  description?: string | null;
   questions: SurveyQuestion[];
   appearance?: {
     widgetLabel?: string;
