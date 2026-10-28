@@ -5,6 +5,7 @@ import { ReadingSelection } from '@/components/reading-selection';
 import { DateNavigation } from '@/components/date-navigation';
 import { SettingsDialog } from '@/components/settings-dialog';
 import { ProgressTracker } from '@/components/progress-tracker';
+import { WebMcpTools } from '@/components/webmcp-tools';
 
 // This will statically generate a page for each day of the plan
 export function generateStaticParams() {
@@ -61,6 +62,7 @@ export default async function DayPage({
       <ReadingSelection />
       <DateNavigation />
       <SettingsDialog />
+      <WebMcpTools />
     </PlanProvider>
   );
 }

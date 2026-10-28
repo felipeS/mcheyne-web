@@ -3,6 +3,7 @@
 import { useMemo } from 'react';
 import { usePlan } from '@/context/PlanProvider';
 import { useTranslations } from 'next-intl';
+import { countMissedDaysSinceLastRead } from '@/lib/planConstants';
 
 export function ProgressTracker() {
   const { selections, indexForToday, isSelfPaced, hasRead } = usePlan();
@@ -53,34 +54,6 @@ export function ProgressTracker() {
       </div>
     </div>
   );
-}
-
-function countMissedDaysSinceLastRead(
-  selections: { passages: string[]; isLeap?: boolean }[],
-  startIndex: number,
-  hasRead: (desc: string, id: number) => boolean
-) {
-  if (!selections.length) return 0;
-
-  let missed = 0;
-
-  for (let index = startIndex; index >= 0; index -= 1) {
-    const selection = selections[index];
-    if (selection.isLeap) {
-      continue;
-    }
-
-    const hasAnyRead = selection.passages.some((passage, passageIndex) =>
-      hasRead(passage, passageIndex)
-    );
-    if (hasAnyRead) {
-      break;
-    }
-
-    missed += 1;
-  }
-
-  return missed;
 }
 
 function ProgressBar({ value }: { value: number }) {

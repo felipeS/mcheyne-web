@@ -26,6 +26,7 @@ type PlanContextType = {
   getSelection: (index?: number) => { passages: string[]; isLeap?: boolean };
   hasRead: (desc: string, id: number) => boolean;
   toggleRead: (desc: string, id: number) => void;
+  setPassagesRead: (entries: { desc: string; id: number }[], read: boolean) => void;
   onboarded: boolean;
   setOnboarded: (v: boolean) => void;
 };
@@ -193,6 +194,20 @@ export function PlanProvider({
     [passages]
   );
 
+  // Functional update so back-to-back calls (e.g. from WebMCP tools) don't clobber each other.
+  const setPassagesRead = useCallback((entries: { desc: string; id: number }[], read: boolean) => {
+    setPassages((prev) => {
+      const next = { ...prev };
+      for (const { desc, id } of entries) {
+        const key = v2Key(desc, id);
+        if (read) next[key] = true;
+        else delete next[key];
+      }
+      persistPassages(next);
+      return next;
+    });
+  }, []);
+
   const getSelection = useCallback(
     (index?: number) => {
       return selections[index ?? indexForToday];
@@ -219,6 +234,7 @@ export function PlanProvider({
       getSelection,
       hasRead,
       toggleRead,
+      setPassagesRead,
       onboarded,
       setOnboarded,
     }),
@@ -234,6 +250,7 @@ export function PlanProvider({
       getSelection,
       hasRead,
       toggleRead,
+      setPassagesRead,
       onboarded,
       setOnboarded,
     ]

@@ -432,3 +432,31 @@ export function splitPassage(desc: string): { book: string; chapter: string } {
 export function v2Key(desc: string, id: number) {
   return `${desc}+${id}`;
 }
+
+export function countMissedDaysSinceLastRead(
+  selections: Selection[],
+  startIndex: number,
+  hasRead: (desc: string, id: number) => boolean
+) {
+  if (!selections.length) return 0;
+
+  let missed = 0;
+
+  for (let index = startIndex; index >= 0; index -= 1) {
+    const selection = selections[index];
+    if (selection.isLeap) {
+      continue;
+    }
+
+    const hasAnyRead = selection.passages.some((passage, passageIndex) =>
+      hasRead(passage, passageIndex)
+    );
+    if (hasAnyRead) {
+      break;
+    }
+
+    missed += 1;
+  }
+
+  return missed;
+}
