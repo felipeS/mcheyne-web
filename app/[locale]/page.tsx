@@ -4,6 +4,7 @@ import { DateNavigation } from '@/components/date-navigation';
 import { SettingsDialog } from '@/components/settings-dialog';
 import { Onboarding } from '@/components/onboarding';
 import { ProgressTracker } from '@/components/progress-tracker';
+import { WebMcpTools } from '@/components/webmcp-tools';
 
 export default function Page() {
   return (
@@ -13,6 +14,7 @@ export default function Page() {
       <ReadingSelection />
       <DateNavigation />
       <SettingsDialog />
+      <WebMcpTools />
     </PlanProvider>
   );
 }
